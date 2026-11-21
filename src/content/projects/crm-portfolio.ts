@@ -36,6 +36,7 @@ export const crmPortfolio: Project = {
     ru: {
       name: "CRM Portfolio",
       kind: "CRM с автоматизациями",
+      stages: ["Заявка с сайта", "Автоматизация", "Переписка", "Воронка", "Документы", "Аналитика"],
       tagline:
         "Контакты, сделки и вся переписка с клиентом — почта, звонки, WhatsApp и Telegram — в одной CRM с автоматическими сценариями.",
       summary:
@@ -129,6 +130,7 @@ export const crmPortfolio: Project = {
     ro: {
       name: "CRM Portfolio",
       kind: "CRM cu automatizări",
+      stages: ["Cerere de pe site", "Automatizare", "Comunicare", "Pâlnie", "Documente", "Analiză"],
       tagline:
         "Contacte, tranzacții și toată comunicarea cu clientul — e-mail, apeluri, WhatsApp și Telegram — într-un singur CRM cu scenarii automate.",
       summary:
@@ -222,6 +224,7 @@ export const crmPortfolio: Project = {
     en: {
       name: "CRM Portfolio",
       kind: "CRM with automations",
+      stages: ["Website lead", "Automation", "Conversations", "Pipeline", "Documents", "Analytics"],
       tagline:
         "Contacts, deals and every customer conversation — email, calls, WhatsApp and Telegram — in one CRM with automated workflows.",
       summary:

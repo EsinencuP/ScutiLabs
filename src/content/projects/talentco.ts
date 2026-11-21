@@ -36,12 +36,12 @@ export const talentco: Project = {
   services: ["hr-team", "analytics-control"],
   links: { demo: "https://talentco-team-workspace-demo.academ1cian.chatgpt.site/" },
   stack: [],
-  cover: s.pipeline,
   gallery: [s.home, s.timeOff, s.pipeline, s.screening, s.automations],
   text: {
     ru: {
       name: "TalentCo Workspace",
       kind: "Портал команды и найм",
+      stages: ["Задачи команды", "Проекты", "Скрининг", "Автоматизации", "Интервью", "Отчёты"],
       tagline:
         "Внутренний портал компании и система найма в одном интерфейсе: проекты, ответственность, отпуска, вакансии, кандидаты и интервью.",
       summary:
@@ -133,6 +133,7 @@ export const talentco: Project = {
     ro: {
       name: "TalentCo Workspace",
       kind: "Portalul echipei și recrutare",
+      stages: ["Sarcinile echipei", "Proiecte", "Screening", "Automatizări", "Interviuri", "Rapoarte"],
       tagline:
         "Portalul intern al companiei și sistemul de recrutare într-o singură interfață: proiecte, responsabilități, concedii, posturi, candidați și interviuri.",
       summary:
@@ -224,6 +225,7 @@ export const talentco: Project = {
     en: {
       name: "TalentCo Workspace",
       kind: "Team portal and hiring",
+      stages: ["Team tasks", "Projects", "Screening", "Automations", "Interviews", "Reports"],
       tagline:
         "A company's internal portal and its hiring system in one interface: projects, ownership, time off, jobs, candidates and interviews.",
       summary:

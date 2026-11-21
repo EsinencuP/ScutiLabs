@@ -17,6 +17,8 @@ type Module = { name: string; text: string };
 export type ProjectText = {
   name: string;
   kind: string;
+  /** Short process stages, drawn as the stars of the project preview constellation. */
+  stages: string[];
   tagline: string;
   summary: string;
   purpose: string[];
@@ -49,7 +51,6 @@ export type Project = {
   links: { demo?: string; guide?: string; repo?: string; related?: { href: string; label: L10n } };
   demoCredentials?: { login: string; password: string };
   stack: string[];
-  cover?: Shot;
   gallery: Shot[];
   text: L10n<ProjectText>;
   demo: DemoPart[];

@@ -2,7 +2,7 @@ import type { L10n } from "@/i18n/config";
 import type { ServiceSlug } from "@/content/services";
 import type { Project } from "./types";
 
-type Brief = { name: string; kind: string; tagline: string; purpose: string };
+type Brief = { name: string; kind: string; stages: string[]; tagline: string; purpose: string };
 
 const note: L10n = {
   ru: "Проект в разработке: демонстрация и код пока закрыты. Подробный разбор процесса и возможностей появится после открытия доступа.",
@@ -23,6 +23,7 @@ function upcoming(slug: string, services: ServiceSlug[], text: L10n<Brief>): Pro
     return {
       name: t.name,
       kind: t.kind,
+      stages: t.stages,
       tagline: t.tagline,
       summary: `${t.tagline} ${note[l]}`,
       purpose: [t.purpose, note[l]],
@@ -51,18 +52,21 @@ export const upcomingProjects: Project[] = [
     ru: {
       name: "Optimix Commerce",
       kind: "Операции электронной коммерции",
+      stages: ["Заказ", "Остатки", "Сборка", "Доставка", "Отчёт"],
       tagline: "Рабочее пространство для операционной команды онлайн-торговли.",
       purpose: "Optimix Commerce собирает операционную работу интернет-магазина в одном интерфейсе, чтобы команде не приходилось сводить данные из разных сервисов вручную.",
     },
     ro: {
       name: "Optimix Commerce",
       kind: "Operațiuni de comerț electronic",
+      stages: ["Comandă", "Stocuri", "Pregătire", "Livrare", "Raport"],
       tagline: "Spațiu de lucru pentru echipa operațională a comerțului online.",
       purpose: "Optimix Commerce adună munca operațională a magazinului online într-o singură interfață, ca echipa să nu mai combine manual datele din servicii diferite.",
     },
     en: {
       name: "Optimix Commerce",
       kind: "E-commerce operations",
+      stages: ["Order", "Stock", "Fulfilment", "Delivery", "Report"],
       tagline: "A workspace for an online retailer's operations team.",
       purpose: "Optimix Commerce brings an online store's operational work into one interface, so the team stops stitching data together from separate tools by hand.",
     },
@@ -71,18 +75,21 @@ export const upcomingProjects: Project[] = [
     ru: {
       name: "Founder Workspace",
       kind: "Рабочее пространство основателя",
+      stages: ["Цели", "Показатели", "Задачи", "Команда", "Решения"],
       tagline: "Одно место, где основатель видит состояние компании и ведёт ключевые задачи.",
       purpose: "Founder Workspace объединяет то, за чем основатель следит каждый день, в одном рабочем пространстве вместо разрозненных таблиц и заметок.",
     },
     ro: {
       name: "Founder Workspace",
       kind: "Spațiul de lucru al fondatorului",
+      stages: ["Obiective", "Indicatori", "Sarcini", "Echipă", "Decizii"],
       tagline: "Un singur loc în care fondatorul vede starea companiei și își conduce sarcinile cheie.",
       purpose: "Founder Workspace reunește tot ce urmărește zilnic fondatorul într-un singur spațiu de lucru, în locul tabelelor și notițelor disparate.",
     },
     en: {
       name: "Founder Workspace",
       kind: "Founder's workspace",
+      stages: ["Goals", "Metrics", "Tasks", "Team", "Decisions"],
       tagline: "One place where a founder sees the state of the company and runs key tasks.",
       purpose: "Founder Workspace brings what a founder tracks every day into one workspace instead of scattered spreadsheets and notes.",
     },
@@ -91,18 +98,21 @@ export const upcomingProjects: Project[] = [
     ru: {
       name: "Automation Hub",
       kind: "Центр автоматизаций",
+      stages: ["Событие", "Условие", "Действие", "Журнал", "Контроль"],
       tagline: "Единый интерфейс для управления автоматизациями бизнес-процессов.",
       purpose: "Automation Hub собирает автоматизации компании в одном месте, чтобы было видно, что запускается, когда и с каким результатом.",
     },
     ro: {
       name: "Automation Hub",
       kind: "Centru de automatizări",
+      stages: ["Eveniment", "Condiție", "Acțiune", "Jurnal", "Control"],
       tagline: "O interfață unică pentru gestionarea automatizărilor proceselor de business.",
       purpose: "Automation Hub adună automatizările companiei într-un singur loc, ca să se vadă ce rulează, când și cu ce rezultat.",
     },
     en: {
       name: "Automation Hub",
       kind: "Automation hub",
+      stages: ["Event", "Condition", "Action", "Log", "Oversight"],
       tagline: "One interface for managing business process automations.",
       purpose: "Automation Hub gathers a company's automations in one place, so it's clear what runs, when and with what result.",
     },
@@ -111,18 +121,21 @@ export const upcomingProjects: Project[] = [
     ru: {
       name: "Recruiting Workspace",
       kind: "Автоматизация найма",
+      stages: ["Вакансия", "Отклик", "Скрининг", "Интервью", "Оффер"],
       tagline: "Рабочее пространство рекрутера с автоматизацией рутинных шагов найма.",
       purpose: "Recruiting Workspace помогает команде найма вести вакансии и кандидатов и снимает с рекрутера повторяющиеся ручные действия.",
     },
     ro: {
       name: "Recruiting Workspace",
       kind: "Automatizarea recrutării",
+      stages: ["Post", "Aplicare", "Screening", "Interviu", "Ofertă"],
       tagline: "Spațiul de lucru al recrutorului, cu automatizarea pașilor de rutină.",
       purpose: "Recruiting Workspace ajută echipa de recrutare să gestioneze posturile și candidații și preia de la recrutor acțiunile manuale repetitive.",
     },
     en: {
       name: "Recruiting Workspace",
       kind: "Recruiting automation",
+      stages: ["Job", "Application", "Screening", "Interview", "Offer"],
       tagline: "A recruiter's workspace that automates routine hiring steps.",
       purpose: "Recruiting Workspace helps the hiring team manage jobs and candidates and takes repetitive manual steps off the recruiter's plate.",
     },

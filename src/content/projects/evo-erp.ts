@@ -81,12 +81,12 @@ export const evoErp: Project = {
     "Docker Compose",
     "Vercel",
   ],
-  cover: erpShots.pipeline,
   gallery: [erpShots.dashboard, erpShots.invoice, erpShots.ledger, erpShots.org, erpShots.projects, erpShots.audit],
   text: {
     ru: {
       name: "Evo ERP",
       kind: "ERP-система",
+      stages: ["Сделка", "Счёт", "Оплата", "Склад", "Проекты", "Отпуска", "Аудит"],
       tagline: "Продажи, финансы, склад, персонал и проекты компании в одном рабочем пространстве.",
       summary:
         "Модульная ERP: CRM с воронкой, счета и платежи с PDF, учёт на нескольких складах, кадры с отпусками, проекты и роли доступа. Открыто публичное демо с учебными данными.",
@@ -205,6 +205,7 @@ export const evoErp: Project = {
     ro: {
       name: "Evo ERP",
       kind: "Sistem ERP",
+      stages: ["Tranzacție", "Factură", "Plată", "Depozit", "Proiecte", "Concedii", "Audit"],
       tagline: "Vânzările, finanțele, depozitul, personalul și proiectele companiei într-un singur spațiu de lucru.",
       summary:
         "ERP modular: CRM cu pâlnie, facturi și plăți cu PDF, evidența mai multor depozite, personal și concedii, proiecte și roluri de acces. Demo public cu date de exemplu.",
@@ -323,6 +324,7 @@ export const evoErp: Project = {
     en: {
       name: "Evo ERP",
       kind: "ERP system",
+      stages: ["Deal", "Invoice", "Payment", "Inventory", "Projects", "Time off", "Audit"],
       tagline: "A company's sales, finance, inventory, people and projects in one workspace.",
       summary:
         "Modular ERP: CRM with a pipeline, invoices and payments with PDF, multi-warehouse inventory, HR with leave, projects and access roles. Public demo with sample data.",

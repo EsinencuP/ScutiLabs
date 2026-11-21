@@ -1,49 +1,103 @@
-import Image from "next/image";
 import type { Project } from "@/content/projects";
 import type { Locale } from "@/i18n/config";
-import { halftoneDisc } from "@/lib/halftone";
 
-/** A project's workflow drawn as a constellation: each actor is a star, the path is the process. */
-export function Constellation({ steps, className = "" }: { steps: { actor: string; result?: string }[]; className?: string }) {
-  const W = 640;
-  const H = 400;
-  const n = steps.length;
-  const pts = steps.map((_, i) => {
-    const x = 70 + (i * (W - 140)) / Math.max(1, n - 1);
-    const y = 200 + Math.sin(i * 1.25 + 0.4) * 105 + (i % 2 ? 18 : -18);
-    return { x, y };
+/** Small deterministic PRNG so every project gets its own, stable constellation. */
+function random(seed: number) {
+  let s = seed >>> 0 || 1;
+  return () => {
+    s = (s * 1664525 + 1013904223) >>> 0;
+    return s / 4294967296;
+  };
+}
+
+const hash = (text: string) => [...text].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) >>> 0, 7);
+
+/**
+ * A project's process drawn as a constellation: each stage is a star, the path is the workflow.
+ * In-development projects end on a star that hasn't ignited yet.
+ */
+export function Constellation({
+  stages,
+  seed,
+  dormant = false,
+  wide = false,
+  className = "",
+}: {
+  stages: string[];
+  seed: string;
+  dormant?: boolean;
+  wide?: boolean;
+  className?: string;
+}) {
+  const W = wide ? 1000 : 640;
+  const H = wide ? 360 : 400;
+  const rand = random(hash(seed));
+  const n = stages.length;
+  const padX = wide ? 90 : 70;
+  const mid = H / 2;
+  const amp = wide ? 85 + rand() * 20 : 105 + rand() * 25;
+  const phase = rand() * Math.PI * 2;
+  const freq = 1.05 + rand() * 0.5;
+
+  const pts = stages.map((_, i) => ({
+    x: padX + (i * (W - padX * 2)) / Math.max(1, n - 1),
+    y: mid + Math.sin(i * freq + phase) * amp + (rand() - 0.5) * 36,
+  }));
+
+  // Put each label on the side away from the lines that meet at its star,
+  // and flip it when it would collide with the previous label on that side.
+  const FONT = wide ? 18 : 21;
+  const placed: { left: number; right: number; y: number }[] = [];
+  const labelY = (p: { y: number }, up: boolean) => p.y + (up ? -24 : 36);
+  const collides = (left: number, right: number, y: number) =>
+    placed.some((q) => left < q.right + 10 && right > q.left - 10 && Math.abs(y - q.y) < FONT + 6);
+  const above = pts.map((p, i) => {
+    const neighbours = [pts[i - 1], pts[i + 1]].filter(Boolean);
+    const avg = neighbours.reduce((sum, q) => sum + q.y, 0) / neighbours.length;
+    const width = stages[i].length * FONT * 0.56;
+    const left = i === 0 ? p.x - 8 : i === n - 1 ? p.x + 8 - width : p.x - width / 2;
+    let up = p.y <= avg;
+    if (collides(left, left + width, labelY(p, up)) && !collides(left, left + width, labelY(p, !up))) up = !up;
+    placed.push({ left, right: left + width, y: labelY(p, up) });
+    return up;
   });
+
   const path = pts.map((p, i) => `${i ? "L" : "M"}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(" ");
-  // a sparse field of background stars, deterministic
-  const field = Array.from({ length: 70 }, (_, i) => {
-    const s = Math.sin(i * 91.7) * 43758.5453;
-    const t = Math.sin(i * 37.3) * 12543.123;
-    return { x: (s - Math.floor(s)) * W, y: (t - Math.floor(t)) * H, r: i % 9 === 0 ? 1.3 : 0.7 };
-  });
+  const field = Array.from({ length: wide ? 110 : 70 }, () => ({
+    x: rand() * W,
+    y: rand() * H,
+    r: rand() > 0.88 ? 1.3 : 0.7,
+    o: 0.15 + rand() * 0.25,
+  }));
 
   return (
     <div className={`overflow-hidden rounded-[1.25rem] bg-[#0d0e12] text-white ${className}`}>
-      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" aria-hidden="true">
+      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={stages.join(" → ")}>
         {field.map((f, i) => (
-          <circle key={i} cx={f.x} cy={f.y} r={f.r} fill="#fff" opacity={0.28} />
+          <circle key={i} cx={f.x.toFixed(1)} cy={f.y.toFixed(1)} r={f.r} fill="#fff" opacity={f.o.toFixed(2)} />
         ))}
         <path d={path} fill="none" stroke="#fff" strokeOpacity={0.45} strokeWidth={1} strokeDasharray="3 5" />
         {pts.map((p, i) => {
-          const above = i % 2 === 0;
           const last = i === n - 1;
+          const first = i === 0;
           return (
-            <g key={i} transform={`translate(${p.x} ${p.y})`}>
+            <g key={i} transform={`translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})`}>
               <circle r={14} fill="#fff" opacity={0.08} />
-              <circle r={last ? 6 : 4.5} fill={last ? "#ff7a45" : "#fff"} />
+              {last && dormant ? (
+                <circle r={6} fill="none" stroke="#ff7a45" strokeWidth={1.5} strokeDasharray="2 2.5" />
+              ) : (
+                <circle r={last ? 6 : 4.5} fill={last ? "#ff7a45" : "#fff"} />
+              )}
               <text
-                y={above ? -24 : 34}
-                textAnchor={i === 0 ? "start" : last ? "end" : "middle"}
-                x={i === 0 ? -8 : last ? 8 : 0}
-                fontSize={18}
+                y={labelY({ y: 0 }, above[i])}
+                x={first ? -8 : last ? 8 : 0}
+                textAnchor={first ? "start" : last ? "end" : "middle"}
+                fontSize={FONT}
                 fill="#fff"
                 fontWeight={500}
+                opacity={last && dormant ? 0.6 : 1}
               >
-                {steps[i].actor}
+                {stages[i]}
               </text>
             </g>
           );
@@ -53,52 +107,13 @@ export function Constellation({ steps, className = "" }: { steps: { actor: strin
   );
 }
 
-export function ProjectVisual({
-  project,
-  locale,
-  priority = false,
-  sizes = "(min-width: 1024px) 58vw, 100vw",
-}: {
-  project: Project;
-  locale: Locale;
-  priority?: boolean;
-  sizes?: string;
-}) {
-  if (project.cover) {
-    const c = project.cover;
-    return (
-      <div className="shot">
-        <Image
-          src={c.src}
-          width={c.width}
-          height={c.height}
-          alt={c.alt[locale]}
-          sizes={sizes}
-          priority={priority}
-          className="h-auto w-full"
-        />
-      </div>
-    );
-  }
-  const workflow = project.text[locale].workflow;
-  if (workflow) return <Constellation steps={workflow} />;
-  return <Protostar name={project.text[locale].name} />;
-}
-
-/** A project still in development: a body that hasn't ignited yet. Light direction varies per project. */
-function Protostar({ name }: { name: string }) {
-  const seed = [...name].reduce((sum, ch) => sum + ch.charCodeAt(0), 0);
-  const angle = (seed % 360) * (Math.PI / 180);
-  const protoDots = halftoneDisc(120, 9, 3.6, { x: Math.cos(angle) * 0.75, y: Math.sin(angle) * 0.75 });
+export function ProjectVisual({ project, locale, wide = false }: { project: Project; locale: Locale; wide?: boolean }) {
   return (
-    <div className="relative flex aspect-[16/10] items-end overflow-hidden rounded-[1.25rem] bg-[#0d0e12] p-6 text-white md:p-8">
-      <svg viewBox="-160 -160 320 320" className="absolute -right-10 -top-10 h-[115%] w-auto" aria-hidden="true">
-        <circle r="150" fill="none" stroke="#fff" strokeOpacity={0.12} strokeDasharray="2 6" />
-        {protoDots.map((d, i) => (
-          <circle key={i} cx={d.x} cy={d.y} r={d.r} fill="#fff" opacity={0.55} />
-        ))}
-      </svg>
-      <p className="display relative text-4xl leading-none text-white/90 md:text-5xl">{name}</p>
-    </div>
+    <Constellation
+      stages={project.text[locale].stages}
+      seed={project.slug}
+      dormant={project.status === "development"}
+      wide={wide}
+    />
   );
 }

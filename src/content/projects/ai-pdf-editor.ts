@@ -45,12 +45,12 @@ export const aiPdfEditor: Project = {
     "Playwright",
     "Vitest",
   ],
-  cover: s.editor,
   gallery: [s.welcome, s.review, s.batch, s.editor],
   text: {
     ru: {
       name: "AI PDF Editor",
       kind: "Редактор PDF с ИИ",
+      stages: ["Загрузка PDF", "Поиск текста", "ИИ-предложение", "Просмотр", "Правка", "Проверка"],
       tagline: "Точечные правки в готовом PDF: текст и суммы меняются, а вёрстка документа остаётся прежней.",
       summary:
         "Веб-редактор для исправлений в готовых PDF — счетах, резюме, договорах. Правку можно описать словами или сделать вручную; каждый результат проверяется перед скачиванием. Работает в браузере, без регистрации.",
@@ -139,6 +139,7 @@ export const aiPdfEditor: Project = {
     ro: {
       name: "AI PDF Editor",
       kind: "Editor PDF cu AI",
+      stages: ["Încărcare PDF", "Căutare text", "Propunere AI", "Revizuire", "Editare", "Validare"],
       tagline: "Corecturi punctuale în PDF-ul final: textul și sumele se schimbă, iar macheta documentului rămâne aceeași.",
       summary:
         "Editor web pentru corecturi în PDF-uri finale — facturi, CV-uri, contracte. Modificarea se descrie în cuvinte sau se face manual; fiecare rezultat este verificat înainte de descărcare. Rulează în browser, fără înregistrare.",
@@ -227,6 +228,7 @@ export const aiPdfEditor: Project = {
     en: {
       name: "AI PDF Editor",
       kind: "AI-assisted PDF editor",
+      stages: ["PDF upload", "Find text", "AI proposal", "Review", "Edit", "Validation"],
       tagline: "Precise edits in a finished PDF: text and amounts change while the document layout stays intact.",
       summary:
         "A web editor for corrections in finished PDFs — invoices, resumes, contracts. Describe a change in words or make it by hand; every result is validated before download. Runs in the browser with no account.",

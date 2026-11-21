@@ -116,7 +116,7 @@ export default async function ProjectPage({ params }: Props) {
         </dl>
 
         <div className="mt-12">
-          <ProjectVisual project={project} locale={locale} priority sizes="(min-width: 1312px) 1232px, 100vw" />
+          <ProjectVisual project={project} locale={locale} wide />
         </div>
       </PageHero>
 

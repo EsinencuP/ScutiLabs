@@ -11,7 +11,7 @@ export function ProjectCard({ project, locale, t }: { project: Project; locale: 
   const p = project.text[locale];
   return (
     <article className="group relative flex h-full flex-col rounded-[1.5rem] bg-white p-3">
-      <ProjectVisual project={project} locale={locale} sizes="(min-width: 1024px) 40vw, 100vw" />
+      <ProjectVisual project={project} locale={locale} />
       <div className="flex flex-1 flex-col px-3 pb-4 pt-6">
         <div className="flex flex-wrap items-center gap-3 text-sm text-ink-2">
           <StatusBadge status={project.status} label={t.status[project.status]} />
