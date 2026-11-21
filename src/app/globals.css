@@ -1,0 +1,298 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #e6e7ea;
+  --color-panel: #f6f6f7;
+  --color-ink: #000000;
+  --color-ink-2: #55565e;
+  --color-ink-3: #8a8b93;
+  --color-line: #d3d4d9;
+  --color-line-2: #e7e8eb;
+  --color-scuti: #c2371d;
+  --color-demo: #2b59c3;
+  --color-dev: #a8641c;
+  --color-live: #17834a;
+
+  --font-sans: var(--font-onest), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-noto-display), Georgia, "Times New Roman", serif;
+  --font-glyph: var(--font-jetbrains), ui-monospace, "Cascadia Mono", monospace;
+
+  --breakpoint-xs: 30rem;
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+    background: var(--color-paper);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Faint column guides, a nod to a star-chart grid */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: linear-gradient(to right, rgb(0 0 0 / 0.05) 1px, transparent 1px);
+    background-size: calc((100% - 2rem) / 4) 100%;
+    background-position: 1rem 0;
+  }
+
+  @media (min-width: 64rem) {
+    body::before {
+      background-size: calc((100% - 5rem) / 6) 100%;
+      background-position: 2.5rem 0;
+    }
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    font-variation-settings: "wdth" 62.5;
+    font-weight: 480;
+    letter-spacing: -0.012em;
+    line-height: 0.94;
+  }
+
+  .h-hero {
+    font-size: clamp(3.4rem, 8.8vw, 9.25rem);
+    line-height: 0.88;
+  }
+
+  .h-page {
+    font-size: clamp(3rem, 7.4vw, 6.5rem);
+  }
+
+  .h-section {
+    font-size: clamp(2.5rem, 4.8vw, 4.25rem);
+  }
+
+  .h-block {
+    font-size: clamp(1.9rem, 2.8vw, 2.6rem);
+    line-height: 1;
+  }
+
+  .lead {
+    font-size: clamp(1.125rem, 1.4vw, 1.3rem);
+    line-height: 1.5;
+    color: var(--color-ink-2);
+  }
+
+  .frame {
+    position: relative;
+    z-index: 1;
+    padding-inline: 0.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .frame {
+      padding-inline: 0.75rem;
+    }
+  }
+
+  .panel {
+    background: #fff;
+    border-radius: 1.75rem;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 82rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 64rem) {
+    .wrap {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.625rem 1.5rem;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.2;
+    text-decoration: none;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s;
+  }
+
+  .btn-primary {
+    position: relative;
+    isolation: isolate;
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .btn-primary:hover {
+    background: #26272c;
+  }
+
+  /* Stellar-spectrum glow (O → M classes) under the main call to action */
+  .btn-glow::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 12%;
+    right: 12%;
+    bottom: -0.55rem;
+    height: 1rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #8fa8ff, #cfdaff 22%, #fff3e3 44%, #ffc47e 64%, #ff7a45 82%, #c2371d);
+    filter: blur(9px);
+    opacity: 0.9;
+    transition:
+      opacity 0.25s,
+      transform 0.25s;
+  }
+
+  .btn-glow:hover::after {
+    transform: scaleX(1.1);
+    opacity: 1;
+  }
+
+  .btn-ghost {
+    border: 1px solid var(--color-line);
+    color: var(--color-ink);
+    background: transparent;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--color-ink);
+  }
+
+  .btn-sm {
+    min-height: 2.5rem;
+    padding: 0.4rem 1.1rem;
+    font-size: 0.9375rem;
+  }
+
+  .link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    text-decoration-color: var(--color-ink-3);
+    transition: text-decoration-color 0.2s;
+  }
+
+  .link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .field {
+    width: 100%;
+    border: 1px solid var(--color-line);
+    border-radius: 0.875rem;
+    background: #fff;
+    padding: 0.75rem 0.95rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--color-ink);
+    transition: border-color 0.2s;
+  }
+
+  .field::placeholder {
+    color: var(--color-ink-3);
+  }
+
+  .field:hover {
+    border-color: var(--color-ink-3);
+  }
+
+  .field:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 1px;
+    border-color: var(--color-ink);
+  }
+
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  .shot {
+    border-radius: 1rem;
+    border: 1px solid var(--color-line);
+    background: #0d0e12;
+    overflow: hidden;
+  }
+
+  .glyph-art {
+    font-family: var(--font-glyph);
+    line-height: 1.05;
+    white-space: pre;
+    user-select: none;
+  }
+
+  details.faq > summary {
+    list-style: none;
+    cursor: pointer;
+  }
+
+  details.faq > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details.faq[open] .faq-sign {
+    transform: rotate(45deg);
+  }
+}
