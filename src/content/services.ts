@@ -1,4 +1,4 @@
-import type { L10n, Locale } from "@/i18n/config";
+import type { L10n } from "@/i18n/config";
 
 export const serviceSlugs = [
   "hr-team",
@@ -480,6 +480,3 @@ export function getService(slug: string) {
   return services.find((s) => s.slug === slug);
 }
 
-export function serviceText(service: Service, locale: Locale) {
-  return service.text[locale];
-}

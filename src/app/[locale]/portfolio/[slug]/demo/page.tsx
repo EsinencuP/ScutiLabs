@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     path: `/portfolio/${slug}/demo`,
     title: fill(t.demo.of, { name }),
-    description: `${t.demo.lead} ${project.demo.map((d) => d.text[locale].title).join(", ")}.`,
+    description: `${fill(t.demo.of, { name })}: ${project.demo.map((d) => d.text[locale].title).join(", ")}.`,
   });
 }
 

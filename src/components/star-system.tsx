@@ -71,7 +71,7 @@ export function StarSystem({ locale, services, labels }: { locale: Locale; servi
             cx={d.x}
             cy={d.y}
             r={d.r}
-            className={`transition-[fill] duration-300 ${selected ? "fill-ink" : p.behind ? "fill-ink-3/70" : "fill-ink-3"}`}
+            className={`transition-[fill] duration-300 ${selected ? "fill-ink" : p.behind ? "fill-ink-4/70" : "fill-ink-4"}`}
           />
         ))}
       </g>

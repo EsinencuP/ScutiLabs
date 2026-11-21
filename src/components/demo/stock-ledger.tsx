@@ -74,7 +74,7 @@ export function StockLedger({ t }: { t: Dictionary["stock"] }) {
   const label = "block text-sm text-ink-2";
 
   return (
-    <div className="grid gap-4 lg:grid-cols-12">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
       <div className="rounded-[1.5rem] bg-white p-6 md:p-8 lg:col-span-5">
         <h3 className="text-xl font-medium">{t.title}</h3>
         <p className="mt-1 text-ink-2">

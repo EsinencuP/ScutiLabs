@@ -12,6 +12,14 @@ export function absoluteUrl(path: string) {
   return `${SITE_URL}${path}`;
 }
 
+/** Keep a meta description within what search engines display, cutting at a word boundary. */
+export function clampDescription(text: string, max = 160) {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:\s—–-]+$/, "")}…`;
+}
+
 export function breadcrumbLd(items: { name: string; path: string }[]) {
   return {
     "@type": "BreadcrumbList",
@@ -38,22 +46,23 @@ export function pageMetadata(opts: {
   languages["x-default"] = absoluteUrl(localePath(defaultLocale, path));
 
   const image = { url: absoluteUrl(`/${opts.locale}/og`), width: 1200, height: 630, alt: SITE_NAME };
+  const description = clampDescription(opts.description);
 
   return {
     title: opts.title,
-    description: opts.description,
+    description,
     alternates: { canonical: absoluteUrl(localePath(opts.locale, path)), languages },
     openGraph: {
       type: "website",
       siteName: SITE_NAME,
       title: opts.title,
-      description: opts.description,
+      description,
       url: absoluteUrl(localePath(opts.locale, path)),
       locale: ogLocale[opts.locale],
       alternateLocale: locales.filter((l) => l !== opts.locale).map((l) => ogLocale[l]),
       images: [image],
     },
-    twitter: { card: "summary_large_image", title: opts.title, description: opts.description, images: [image.url] },
+    twitter: { card: "summary_large_image", title: opts.title, description, images: [image.url] },
     robots: opts.noindex ? { index: false, follow: true } : undefined,
   };
 }

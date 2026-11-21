@@ -2,7 +2,7 @@ import type { Dictionary } from "./ru";
 
 const ro: Dictionary = {
   meta: {
-    homeTitle: "scutilabs — automatizarea proceselor de business: CRM, ERP și aplicații interne",
+    homeTitle: "scutilabs — automatizarea proceselor: CRM, ERP și aplicații interne",
     homeDescription:
       "scutilabs dezvoltă CRM-uri, ERP-uri și aplicații interne care reduc munca manuală, conectează datele departamentelor și arată cine răspunde de fiecare etapă.",
     titleTemplate: "%s — scutilabs",

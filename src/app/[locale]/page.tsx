@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AsciiStar } from "@/components/ascii-star";
+import { HashScroll } from "@/components/hash-scroll";
 import { PlusIcon } from "@/components/icons";
 import { ProjectRow } from "@/components/project-row";
 import { StarSystem } from "@/components/star-system";
@@ -45,6 +46,7 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <>
+      <HashScroll />
       <JsonLd
         data={{
           "@context": "https://schema.org",

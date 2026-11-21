@@ -10,10 +10,11 @@ type Draft = {
   direction: string;
   current: string;
   problem: string;
-  systems: string[];
+  /** indexes into the localized option lists, so a draft survives switching language */
+  systems: number[];
   people: string;
   result: string;
-  timing: string;
+  timing: number;
   contact: string;
 };
 
@@ -25,18 +26,27 @@ const EMPTY: Draft = {
   systems: [],
   people: "",
   result: "",
-  timing: "",
+  timing: -1,
   contact: "",
 };
 
-const STORAGE_KEY = "scutilabs:brief:v1";
+const STORAGE_KEY = "scutilabs:brief:v2";
+const LEGACY_KEY = "scutilabs:brief:v1";
+
+const isEmpty = (d: Draft) =>
+  d.systems.length === 0 && d.timing < 0 && [d.company, d.direction, d.current, d.problem, d.people, d.result, d.contact].every((v) => !v.trim());
 
 function readStored(): Draft | null {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as Partial<Draft>;
-    return { ...EMPTY, ...parsed, systems: Array.isArray(parsed.systems) ? parsed.systems : [] };
+    return {
+      ...EMPTY,
+      ...parsed,
+      systems: Array.isArray(parsed.systems) ? parsed.systems.filter((n): n is number => Number.isInteger(n)) : [],
+      timing: Number.isInteger(parsed.timing) ? (parsed.timing as number) : -1,
+    };
   } catch {
     return null;
   }
@@ -60,6 +70,11 @@ export function BriefForm({
 
   // Restore the saved draft, or preselect the service passed from a service page.
   useEffect(() => {
+    try {
+      window.localStorage.removeItem(LEGACY_KEY);
+    } catch {
+      /* ignore */
+    }
     const stored = readStored();
     const fromUrl = new URLSearchParams(window.location.search).get("service");
     const preset = fromUrl && services.some((s) => s.slug === fromUrl) ? fromUrl : "";
@@ -71,7 +86,8 @@ export function BriefForm({
     if (!loaded.current) return;
     const id = window.setTimeout(() => {
       try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+        if (isEmpty(draft)) window.localStorage.removeItem(STORAGE_KEY);
+        else window.localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
       } catch {
         /* storage unavailable: the draft simply isn't persisted */
       }
@@ -80,8 +96,8 @@ export function BriefForm({
   }, [draft]);
 
   const set = <K extends keyof Draft>(key: K, value: Draft[K]) => setDraft((d) => ({ ...d, [key]: value }));
-  const toggleSystem = (s: string) =>
-    setDraft((d) => ({ ...d, systems: d.systems.includes(s) ? d.systems.filter((x) => x !== s) : [...d.systems, s] }));
+  const toggleSystem = (i: number) =>
+    setDraft((d) => ({ ...d, systems: d.systems.includes(i) ? d.systems.filter((x) => x !== i) : [...d.systems, i] }));
 
   const directionName =
     draft.direction === "unsure" ? f.direction.unsure : services.find((s) => s.slug === draft.direction)?.name ?? "";
@@ -92,10 +108,10 @@ export function BriefForm({
       [f.direction.label, directionName],
       [f.current.label, draft.current],
       [f.problem.label, draft.problem],
-      [f.systems.label, draft.systems.join(", ")],
+      [f.systems.label, [...draft.systems].sort((a, b) => a - b).map((i) => f.systems.options[i]).filter(Boolean).join(", ")],
       [f.people.label, draft.people],
       [f.result.label, draft.result],
-      [f.timing.label, draft.timing],
+      [f.timing.label, f.timing.options[draft.timing] ?? ""],
       [f.contact.label, draft.contact],
     ];
     const filled = rows.filter(([, v]) => v.trim());
@@ -175,8 +191,8 @@ export function BriefForm({
         <fieldset>
           <legend className={label}>{f.systems.label}</legend>
           <div className="mt-3 flex flex-wrap gap-2">
-            {f.systems.options.map((o) => {
-              const on = draft.systems.includes(o);
+            {f.systems.options.map((o, i) => {
+              const on = draft.systems.includes(i);
               return (
                 <label
                   key={o}
@@ -184,7 +200,7 @@ export function BriefForm({
                     on ? "bg-ink text-white" : "bg-white ring-1 ring-line hover:ring-ink-3"
                   }`}
                 >
-                  <input type="checkbox" className="sr-only" checked={on} onChange={() => toggleSystem(o)} />
+                  <input type="checkbox" className="sr-only" checked={on} onChange={() => toggleSystem(i)} />
                   {o}
                 </label>
               );
@@ -205,14 +221,14 @@ export function BriefForm({
         <fieldset>
           <legend className={label}>{f.timing.label}</legend>
           <div className="mt-3 grid gap-2 sm:grid-cols-2">
-            {f.timing.options.map((o) => (
+            {f.timing.options.map((o, i) => (
               <label
                 key={o}
                 className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-xl px-4 text-[0.9375rem] ring-1 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
-                  draft.timing === o ? "ring-ink" : "ring-line hover:ring-ink-3"
+                  draft.timing === i ? "ring-ink" : "ring-line hover:ring-ink-3"
                 }`}
               >
-                <input type="radio" name="timing" className="accent-black" checked={draft.timing === o} onChange={() => set("timing", o)} />
+                <input type="radio" name="timing" className="accent-black" checked={draft.timing === i} onChange={() => set("timing", i)} />
                 {o}
               </label>
             ))}

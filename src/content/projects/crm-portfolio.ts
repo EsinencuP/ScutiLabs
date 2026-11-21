@@ -8,7 +8,7 @@ export const crmPortfolio: Project = {
   services: ["crm-sales", "documents-approvals", "analytics-control"],
   links: {
     demo: "https://crm-portfolio-omega.vercel.app",
-    guide: "https://github.com/EsinencuP/crm-portfolio/blob/main/%D0%98%D0%9D%D0%A1%D0%A2%D0%A0%D0%A3%D0%9A%D0%A6%D0%98%D0%AF.md",
+    guide: "https://github.com/EsinencuP/crm-portfolio/blob/master/%D0%98%D0%9D%D0%A1%D0%A2%D0%A0%D0%A3%D0%9A%D0%A6%D0%98%D0%AF.md",
     repo: "https://github.com/EsinencuP/crm-portfolio",
   },
   demoCredentials: { login: "admin@demo.com", password: "admin123" },

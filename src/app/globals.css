@@ -5,7 +5,9 @@
   --color-panel: #f6f6f7;
   --color-ink: #000000;
   --color-ink-2: #55565e;
-  --color-ink-3: #8a8b93;
+  /* ink-3: smallest readable text, AA on white and on paper; ink-4: decoration only */
+  --color-ink-3: #66676e;
+  --color-ink-4: #8a8b93;
   --color-line: #d3d4d9;
   --color-line-2: #e7e8eb;
   --color-scuti: #c2371d;

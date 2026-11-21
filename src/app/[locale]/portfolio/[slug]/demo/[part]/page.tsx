@@ -7,7 +7,7 @@ import { ArrowLeft, ArrowRight } from "@/components/icons";
 import { Breadcrumbs, JsonLd, PageHero, Section } from "@/components/ui";
 import { getDemoPart, getProject, projects } from "@/content/projects";
 import { isLocale, locales } from "@/i18n/config";
-import { getDictionary } from "@/i18n/get-dictionary";
+import { fill, getDictionary } from "@/i18n/get-dictionary";
 import { breadcrumbLd, pageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ locale: string; slug: string; part: string }> };
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     path: `/portfolio/${slug}/demo/${part}`,
     title: `${d.title} — ${project.text[locale].name}`,
-    description: d.summary,
+    description: `${d.summary} ${fill(getDictionary(locale).demo.of, { name: project.text[locale].name })}.`,
   });
 }
 

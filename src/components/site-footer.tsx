@@ -111,7 +111,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           </nav>
         </div>
         <div aria-hidden="true" className="relative h-24 overflow-hidden md:h-40">
-          <pre className="glyph-art absolute left-1/2 top-4 -translate-x-1/2 text-[7px] text-white/35 md:text-[11px]">{disc}</pre>
+          <pre className="glyph-art absolute left-1/2 top-4 -translate-x-1/2 text-[7px] text-white/50 md:text-[11px]">{disc}</pre>
         </div>
         <div className="wrap relative flex flex-wrap items-center justify-between gap-4 border-t border-white/12 py-6 text-sm text-white/55">
           <p>© {year} scutilabs</p>

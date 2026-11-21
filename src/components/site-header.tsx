@@ -25,6 +25,7 @@ export function SiteHeader({
   const [dropOpen, setDropOpen] = useState(false);
   const dropRef = useRef<HTMLLIElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -43,6 +44,9 @@ export function SiteHeader({
     if (!dropOpen && !menuOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        // return focus to the control that opened the menu, so keyboard users don't lose their place
+        if (menuOpen) burgerRef.current?.focus();
+        else if (dropOpen) dropRef.current?.querySelector("button")?.focus();
         setDropOpen(false);
         setMenuOpen(false);
       }
@@ -88,13 +92,13 @@ export function SiteHeader({
             href={`/${l}${rest}`}
             hrefLang={l}
             lang={l}
-            aria-label={localeNames[l]}
             aria-current={l === locale ? "true" : undefined}
             className={`inline-flex min-h-10 min-w-9 items-center justify-center rounded-full px-2 transition-colors ${
               l === locale ? "font-semibold text-ink" : "text-ink-3 hover:text-ink"
             }`}
           >
             {l}
+            <span className="sr-only"> {localeNames[l]}</span>
           </Link>
         </li>
       ))}
@@ -178,6 +182,7 @@ export function SiteHeader({
             className="inline-flex size-11 items-center justify-center rounded-full bg-ink text-white lg:hidden"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
+            ref={burgerRef}
             aria-label={menuOpen ? nav.close : nav.menu}
             onClick={() => setMenuOpen((v) => !v)}
           >
