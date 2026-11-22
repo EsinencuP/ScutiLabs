@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BriefForm } from "@/components/brief-form";
+import { BriefPlanner } from "@/components/brief-planner";
 import { Breadcrumbs, PageHero, Section } from "@/components/ui";
 import { services } from "@/content/services";
 import { isLocale } from "@/i18n/config";
@@ -30,8 +30,9 @@ export default async function BriefPage({ params }: Props) {
         <p className="lead mt-6 max-w-[56ch]">{t.brief.lead}</p>
       </PageHero>
       <Section className="!pt-6 md:!pt-8">
-        <BriefForm
+        <BriefPlanner
           t={t.brief}
+          roi={t.roi}
           locale={locale}
           contacts={contacts}
           services={services.map((s) => ({ slug: s.slug, name: s.text[locale].name }))}

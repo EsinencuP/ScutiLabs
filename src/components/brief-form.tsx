@@ -57,11 +57,14 @@ export function BriefForm({
   services,
   locale,
   contacts,
+  extra = null,
 }: {
   t: Dictionary["brief"];
   services: { slug: string; name: string }[];
   locale: string;
   contacts: { email: string | null; telegram: string | null };
+  /** Optional section appended to the draft, e.g. the savings estimate. */
+  extra?: { title: string; lines: string[] } | null;
 }) {
   const [draft, setDraft] = useState<Draft>(EMPTY);
   const [status, setStatus] = useState("");
@@ -115,10 +118,12 @@ export function BriefForm({
       [f.contact.label, draft.contact],
     ];
     const filled = rows.filter(([, v]) => v.trim());
-    if (filled.length === 0) return "";
+    if (filled.length === 0 && !extra) return "";
     const date = new Date().toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" });
-    return [`# ${t.fileTitle}`, `${t.fileDate}: ${date}`, ...filled.map(([k, v]) => `\n## ${k}\n${v.trim()}`)].join("\n");
-  }, [draft, directionName, f, locale, t.fileDate, t.fileTitle]);
+    const sections = filled.map(([k, v]) => `\n## ${k}\n${v.trim()}`);
+    if (extra) sections.push(`\n## ${extra.title}\n${extra.lines.map((l) => `- ${l}`).join("\n")}`);
+    return [`# ${t.fileTitle}`, `${t.fileDate}: ${date}`, ...sections].join("\n");
+  }, [draft, directionName, extra, f, locale, t.fileDate, t.fileTitle]);
 
   function download() {
     if (!text) return;
