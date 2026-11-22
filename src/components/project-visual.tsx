@@ -71,8 +71,9 @@ export function Constellation({
   }));
 
   return (
-    <div className={`overflow-hidden rounded-[1.25rem] bg-[#0d0e12] text-white ${className}`}>
-      <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label={stages.join(" → ")}>
+    <div className={`sky ${className}`}>
+      <div className="sky-surface text-white">
+      <svg viewBox={`0 0 ${W} ${H}`} className="block h-auto w-full" role="img" aria-label={stages.join(" → ")}>
         {field.map((f, i) => (
           <circle key={i} cx={f.x.toFixed(1)} cy={f.y.toFixed(1)} r={f.r} fill="#fff" opacity={f.o.toFixed(2)} />
         ))}
@@ -103,6 +104,7 @@ export function Constellation({
           );
         })}
       </svg>
+      </div>
     </div>
   );
 }

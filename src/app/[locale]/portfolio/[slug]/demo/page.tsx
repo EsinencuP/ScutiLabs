@@ -106,7 +106,7 @@ export default async function DemoPage({ params }: Props) {
                   />
                 </div>
               ) : (
-                <div aria-hidden="true" className="flex aspect-[16/10] items-center justify-center rounded-[1rem] bg-[#0d0e12]">
+                <div aria-hidden="true" className="flex aspect-[16/10] items-center justify-center sky-surface rounded-[1rem]">
                   <span className="display text-7xl text-white/85">{i + 1}</span>
                 </div>
               )}

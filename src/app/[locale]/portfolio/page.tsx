@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PortfolioCatalog } from "@/components/portfolio-catalog";
+import { PortfolioNote } from "@/components/portfolio-note";
 import { ProjectCard } from "@/components/project-card";
 import { Breadcrumbs, JsonLd, PageHero, Section } from "@/components/ui";
 import { projects, type ProjectStatus } from "@/content/projects";
@@ -55,6 +56,7 @@ export default async function PortfolioPage({ params }: Props) {
         <p className="lead mt-6 max-w-[52ch]">{t.portfolioPage.lead}</p>
       </PageHero>
       <Section className="!pt-12 md:!pt-16">
+        <PortfolioNote locale={locale} note={t.portfolio.note} className="mb-12" />
         <PortfolioCatalog
           items={projects.map((p) => ({
             slug: p.slug,

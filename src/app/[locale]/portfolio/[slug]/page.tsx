@@ -342,6 +342,7 @@ export default async function ProjectPage({ params }: Props) {
           <h2 id="cta-title" className="display h-section mx-auto max-w-[22ch]">
             {t.cta.title}
           </h2>
+          <p className="lead mx-auto mt-5 max-w-[60ch]">{tp.custom}</p>
           <Link href={`/${locale}/brief`} className="btn btn-primary btn-glow mt-9">
             {t.cta.button}
           </Link>

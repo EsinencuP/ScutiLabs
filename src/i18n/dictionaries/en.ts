@@ -33,18 +33,9 @@ const en: Dictionary = {
     secondary: "See the portfolio",
     caption: "UY Scuti, constellation Scutum",
   },
-  intro: {
-    title: "We map the process first, then write code",
-    body: "We look at how a request becomes an order, an order becomes an invoice, and an invoice becomes a report. We find where data is retyped by hand, where it gets lost between departments and where nobody is sure who owns the next step. Then we build an app for exactly those places.",
-    points: [
-      { title: "Analysis before development", text: "A process map with owners and the points where data gets lost." },
-      { title: "A working module, not a long spec", text: "The first stage runs on your data and solves one task end to end." },
-      { title: "Support after launch", text: "We train the team, write the user guide and keep developing the system." },
-    ],
-  },
   directions: {
     title: "Automation services",
-    lead: "Pick a service to see the processes we automate.",
+    lead: "Click a planet to see the processes we automate in that area.",
     more: "More about this service",
     processes: "What we automate",
     map: "Service map",
@@ -53,7 +44,12 @@ const en: Dictionary = {
   },
   portfolio: {
     title: "Portfolio",
-    lead: "Projects that are live or in development. Each one comes with a process breakdown, capabilities and a demo.",
+    lead: "Real projects that show what we can do: which processes we have already automated, and how.",
+    note: {
+      title: "The portfolio shows what we can do; it isn't a catalogue of off-the-shelf products",
+      text: "Every company gets an individual audit: we work out what exactly needs optimising, build a strategy and assemble the system around your processes. Browse the cases and pick what is closest to your task — a single module or a combination.",
+      cta: "Discuss your task",
+    },
     open: "Open project",
     catalog: "Full project catalogue",
     more: "More in the portfolio",
@@ -117,16 +113,6 @@ const en: Dictionary = {
       },
     ],
   },
-  team: {
-    title: "Team",
-    body: "scutilabs runs the whole project: from process review to support after launch. You discuss the task directly with the people who design and build the system.",
-    roles: [
-      { name: "Process analysis", text: "Staff interviews, process map, automation priorities." },
-      { name: "Interfaces", text: "Screens that follow the real work, not the database structure." },
-      { name: "Development", text: "Server logic, integrations, permission checks and data reliability." },
-      { name: "Support", text: "Launch, training, user guides, further development." },
-    ],
-  },
   cta: {
     title: "Tell us which process takes the most time",
     text: "The brief takes a few minutes. The draft is stored only in your browser, and you can download it.",
@@ -164,6 +150,7 @@ const en: Dictionary = {
     count: "Projects: {n}",
   },
   projectPage: {
+    custom: "This is a real case from our work. Your solution starts with a process audit and strategy and is built for your company: you can take a single module from this project or combine several.",
     status: "Status",
     year: "Year",
     purpose: "What it is",

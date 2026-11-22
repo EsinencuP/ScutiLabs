@@ -16,10 +16,21 @@
   --color-live: #17834a;
 
   --font-sans: var(--font-onest), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-noto-display), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-google-sans), var(--font-onest), ui-sans-serif, system-ui, sans-serif;
   --font-glyph: var(--font-jetbrains), ui-monospace, "Cascadia Mono", monospace;
 
   --breakpoint-xs: 30rem;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @layer base {
@@ -90,28 +101,30 @@
 @layer components {
   .display {
     font-family: var(--font-display);
-    font-variation-settings: "wdth" 62.5;
-    font-weight: 480;
-    letter-spacing: -0.012em;
-    line-height: 0.94;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
   }
 
   .h-hero {
-    font-size: clamp(3.4rem, 8.8vw, 9.25rem);
-    line-height: 0.88;
+    font-size: clamp(2.75rem, 6.4vw, 6.25rem);
+    letter-spacing: -0.045em;
+    line-height: 0.98;
   }
 
   .h-page {
-    font-size: clamp(3rem, 7.4vw, 6.5rem);
+    font-size: clamp(2.5rem, 5.4vw, 4.75rem);
+    letter-spacing: -0.04em;
   }
 
   .h-section {
-    font-size: clamp(2.5rem, 4.8vw, 4.25rem);
+    font-size: clamp(2.1rem, 3.8vw, 3.4rem);
   }
 
   .h-block {
-    font-size: clamp(1.9rem, 2.8vw, 2.6rem);
-    line-height: 1;
+    font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+    letter-spacing: -0.025em;
+    line-height: 1.08;
   }
 
   .lead {
@@ -283,6 +296,53 @@
     line-height: 1.05;
     white-space: pre;
     user-select: none;
+  }
+
+  .fade-up {
+    animation: fade-up 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up {
+      animation: none;
+    }
+  }
+
+  /* Night sky behind portfolio constellations: soft nebula tint, inner edge light, spectral halo */
+  .sky {
+    position: relative;
+    isolation: isolate;
+    border-radius: 1.25rem;
+  }
+
+  .sky::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 18% 8% -6%;
+    border-radius: 2rem;
+    background: linear-gradient(90deg, #8fa8ff, #cfdaff 30%, #fff3e3 50%, #ffc47e 70%, #ff7a45);
+    filter: blur(28px);
+    opacity: 0.32;
+    transition: opacity 0.4s;
+  }
+
+  .sky-surface {
+    overflow: hidden;
+    border-radius: inherit;
+    background:
+      radial-gradient(55% 70% at 0% 0%, rgb(143 168 255 / 0.2), transparent 70%),
+      radial-gradient(50% 65% at 100% 100%, rgb(255 122 69 / 0.16), transparent 70%),
+      radial-gradient(130% 120% at 30% 10%, #1e2232 0%, #12141c 50%, #0b0c11 100%);
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.08),
+      inset 0 1px 0 rgb(255 255 255 / 0.14),
+      0 22px 50px -26px rgb(16 18 32 / 0.55);
+  }
+
+  a:hover .sky::before,
+  .group:hover .sky::before {
+    opacity: 0.5;
   }
 
   details.faq > summary {

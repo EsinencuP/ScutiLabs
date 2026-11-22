@@ -211,7 +211,7 @@ export function SiteHeader({
             <ul className="mt-6 space-y-1 border-t border-line-2 pt-6">
               {links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="display block py-1.5 text-[2.5rem]" aria-current={l.current ? "page" : undefined}>
+                  <Link href={l.href} className="display block py-1.5 text-[2rem]" aria-current={l.current ? "page" : undefined}>
                     {l.label}
                   </Link>
                 </li>

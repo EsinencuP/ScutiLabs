@@ -242,7 +242,7 @@ export function BriefForm({
       </form>
 
       <aside className="lg:sticky lg:top-24 lg:col-span-5">
-        <div className="rounded-[1.5rem] bg-[#0d0e12] p-6 text-white md:p-8">
+        <div className="sky-surface rounded-[1.5rem] p-6 text-white md:p-8">
           <h2 className="text-sm text-white/55">{t.preview}</h2>
           {text ? (
             <pre className="mt-4 max-h-[26rem] overflow-auto whitespace-pre-wrap break-words font-sans text-[0.9375rem] leading-relaxed text-white/90">

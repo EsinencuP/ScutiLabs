@@ -5,6 +5,7 @@
 **Waiting on the owner:**
 - Open access to the 4 closed projects → then write full cards, demo links, screenshots.
 - Domain → `NEXT_PUBLIC_SITE_URL`; contacts → `NEXT_PUBLIC_CONTACT_EMAIL` / `_TELEGRAM`.
-- Team section has roles only.
+
+**Design (2026-11-22):** headings use Google Sans; home has no intro/team blocks; services are a centred star map with one switching panel; portfolio previews are stage constellations.
 
 **Checks:** `npm run typecheck`, `npm run build`.

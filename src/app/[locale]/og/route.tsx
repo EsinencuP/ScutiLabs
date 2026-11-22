@@ -22,9 +22,9 @@ export async function GET(_req: Request, { params }: { params: Promise<{ locale:
   const locale = isLocale(raw) ? raw : defaultLocale;
   const t = getDictionary(locale);
   const fonts = join(process.cwd(), "src/assets/fonts");
-  const [sans, serif] = await Promise.all([
+  const [sans, display] = await Promise.all([
     readFile(join(fonts, "onest-500.ttf")),
-    readFile(join(fonts, "noto-serif-display-condensed-500.ttf")),
+    readFile(join(fonts, "google-sans-500.ttf")),
   ]);
 
   return new ImageResponse(
@@ -68,10 +68,10 @@ export async function GET(_req: Request, { params }: { params: Promise<{ locale:
               display: "flex",
               marginTop: 56,
               maxWidth: 760,
-              fontFamily: "Noto Serif Display",
-              fontSize: 118,
-              lineHeight: 0.9,
-              letterSpacing: -1,
+              fontFamily: "Google Sans",
+              fontSize: 92,
+              lineHeight: 1,
+              letterSpacing: -3.5,
               color: "#000",
             }}
           >
@@ -98,7 +98,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ locale:
       height: H,
       fonts: [
         { name: "Onest", data: sans, weight: 500, style: "normal" },
-        { name: "Noto Serif Display", data: serif, weight: 500, style: "normal" },
+        { name: "Google Sans", data: display, weight: 500, style: "normal" },
       ],
       headers: { "Cache-Control": "public, max-age=86400, immutable" },
     },

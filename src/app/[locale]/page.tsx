@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { AsciiStar } from "@/components/ascii-star";
 import { HashScroll } from "@/components/hash-scroll";
 import { PlusIcon } from "@/components/icons";
+import { PortfolioNote } from "@/components/portfolio-note";
 import { ProjectRow } from "@/components/project-row";
 import { StarSystem } from "@/components/star-system";
 import { JsonLd, Section, statusDot } from "@/components/ui";
@@ -100,40 +101,15 @@ export default async function HomePage({ params }: Props) {
         </section>
       </div>
 
-      {/* Intro */}
-      <Section labelledBy="intro-title">
-        <div className="grid gap-10 lg:grid-cols-12">
-          <h2 id="intro-title" className="display h-section lg:col-span-6">
-            {t.intro.title}
-          </h2>
-          <div className="lg:col-span-6 lg:pt-3">
-            <p className="text-lg leading-relaxed md:text-xl">{t.intro.body}</p>
-            <dl className="mt-10 grid gap-6 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-              {t.intro.points.map((p) => (
-                <div key={p.title} className="border-t border-ink pt-4">
-                  <dt className="font-medium leading-snug">{p.title}</dt>
-                  <dd className="mt-2 text-[0.9375rem] leading-snug text-ink-2">{p.text}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </div>
-      </Section>
-
       {/* Directions */}
-      <div className="frame" id="directions">
+      <div className="frame pt-2 md:pt-3" id="directions">
         <section aria-labelledby="dir-title" className="panel py-20 md:py-28">
           <div className="wrap">
-            <div className="mb-12 flex flex-wrap items-end justify-between gap-6 md:mb-16">
-              <div>
-                <h2 id="dir-title" className="display h-section">
-                  {t.directions.title}
-                </h2>
-                <p className="lead mt-4 max-w-[48ch]">{t.directions.lead}</p>
-              </div>
-              <Link href={`/${locale}/services`} className="link font-medium">
-                {t.nav.allServices}
-              </Link>
+            <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14">
+              <h2 id="dir-title" className="display h-section">
+                {t.directions.title}
+              </h2>
+              <p className="lead mx-auto mt-4 max-w-[52ch]">{t.directions.lead}</p>
             </div>
             <StarSystem
               locale={locale}
@@ -144,6 +120,7 @@ export default async function HomePage({ params }: Props) {
                 map: t.directions.map,
                 orbits: t.directions.orbits,
                 mapNote: t.directions.mapNote,
+                all: t.nav.allServices,
               }}
             />
           </div>
@@ -163,6 +140,7 @@ export default async function HomePage({ params }: Props) {
             {t.portfolio.catalog}
           </Link>
         </div>
+        <PortfolioNote locale={locale} note={t.portfolio.note} className="mb-20 md:mb-28" />
         <div className="space-y-24 md:space-y-32">
           {featured.map((p, i) => (
             <ProjectRow key={p.slug} project={p} locale={locale} t={t} flip={i % 2 === 1} />
@@ -250,26 +228,6 @@ export default async function HomePage({ params }: Props) {
               </details>
             ))}
           </div>
-        </div>
-      </Section>
-
-      {/* Team */}
-      <Section labelledBy="team-title" className="!pt-0">
-        <div className="grid gap-10 border-t border-line pt-20 md:pt-28 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <h2 id="team-title" className="display h-section">
-              {t.team.title}
-            </h2>
-            <p className="mt-6 max-w-[44ch] text-lg leading-relaxed">{t.team.body}</p>
-          </div>
-          <dl className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:col-span-7">
-            {t.team.roles.map((r) => (
-              <div key={r.name} className="rounded-[1.25rem] bg-white p-6">
-                <dt className="font-medium">{r.name}</dt>
-                <dd className="mt-2 text-[0.9375rem] leading-relaxed text-ink-2">{r.text}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
       </Section>
 

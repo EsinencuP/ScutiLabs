@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Noto_Serif_Display, Onest } from "next/font/google";
+import { Google_Sans, JetBrains_Mono, Onest } from "next/font/google";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -10,11 +10,13 @@ import { SITE_NAME, SITE_URL } from "@/lib/seo";
 import "../globals.css";
 
 const onest = Onest({ subsets: ["latin", "latin-ext", "cyrillic"], variable: "--font-onest", display: "swap" });
-const display = Noto_Serif_Display({
+const display = Google_Sans({
   subsets: ["latin", "latin-ext", "cyrillic"],
-  axes: ["wdth"],
-  variable: "--font-noto-display",
+  variable: "--font-google-sans",
   display: "swap",
+  // next/font has no metric overrides for Google Sans; fall back to the body face instead
+  adjustFontFallback: false,
+  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
 });
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["500"], variable: "--font-jetbrains", display: "swap" });
 

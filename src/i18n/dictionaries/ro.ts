@@ -33,18 +33,9 @@ const ro: Dictionary = {
     secondary: "Vedeți portofoliul",
     caption: "UY Scuti, constelația Scutul",
   },
-  intro: {
-    title: "Mai întâi analizăm procesul, apoi scriem cod",
-    body: "Urmărim cum o cerere devine comandă, comanda devine factură, iar factura devine raport. Găsim locurile unde datele se transcriu manual, unde se pierd între departamente și unde nu e clar cine răspunde de pasul următor. Apoi construim aplicația exact pentru aceste locuri.",
-    points: [
-      { title: "Analiză înainte de dezvoltare", text: "Harta procesului cu responsabili și punctele unde se pierd datele." },
-      { title: "Un modul funcțional, nu un caiet de sarcini lung", text: "Prima etapă rulează pe datele dumneavoastră și rezolvă complet o sarcină." },
-      { title: "Suport după lansare", text: "Instruim echipa, scriem ghidul de utilizare și dezvoltăm sistemul în continuare." },
-    ],
-  },
   directions: {
     title: "Direcții de automatizare",
-    lead: "Alegeți o direcție pentru a vedea procesele pe care le automatizăm.",
+    lead: "Apăsați pe o planetă pentru a vedea procesele pe care le automatizăm în această direcție.",
     more: "Mai multe despre direcție",
     processes: "Ce automatizăm",
     map: "Harta direcțiilor",
@@ -53,7 +44,12 @@ const ro: Dictionary = {
   },
   portfolio: {
     title: "Portofoliu",
-    lead: "Proiecte funcționale sau în dezvoltare. Fiecare are analiza procesului, capabilitățile și o demonstrație.",
+    lead: "Proiecte reale care ne arată posibilitățile: ce procese am automatizat deja și cum.",
+    note: {
+      title: "Portofoliul este o vitrină a posibilităților, nu un catalog de soluții gata făcute",
+      text: "Pentru fiecare companie facem un audit individual: înțelegem ce anume trebuie optimizat, elaborăm strategia și construim sistemul pentru procesele dumneavoastră. Studiați cazurile și alegeți ce se potrivește sarcinii: un singur modul sau o combinație de module.",
+      cta: "Discutăm sarcina dumneavoastră",
+    },
     open: "Deschide proiectul",
     catalog: "Catalogul complet de proiecte",
     more: "Mai multe în portofoliu",
@@ -117,16 +113,6 @@ const ro: Dictionary = {
       },
     ],
   },
-  team: {
-    title: "Echipa",
-    body: "scutilabs conduce proiectul de la un capăt la altul: de la analiza procesului până la suportul după lansare. Discutați sarcina direct cu cei care proiectează și scriu sistemul.",
-    roles: [
-      { name: "Analiza proceselor", text: "Interviuri cu angajații, harta procesului, prioritățile automatizării." },
-      { name: "Interfețe", text: "Ecrane care urmează munca reală, nu structura bazei de date." },
-      { name: "Dezvoltare", text: "Logica de server, integrări, verificarea drepturilor și fiabilitatea datelor." },
-      { name: "Suport", text: "Lansare, instruire, ghiduri, dezvoltarea sistemului." },
-    ],
-  },
   cta: {
     title: "Spuneți-ne ce proces vă ia cel mai mult timp",
     text: "Brief-ul durează câteva minute. Ciorna se păstrează doar în browserul dumneavoastră și poate fi descărcată.",
@@ -164,6 +150,7 @@ const ro: Dictionary = {
     count: "Proiecte: {n}",
   },
   projectPage: {
+    custom: "Acesta este un caz real din practica noastră. Soluția dumneavoastră începe cu auditul proceselor și strategia și se construiește pentru compania dumneavoastră: din acest proiect puteți lua un modul separat sau o combinație de module.",
     status: "Status",
     year: "An",
     purpose: "Esența proiectului",
