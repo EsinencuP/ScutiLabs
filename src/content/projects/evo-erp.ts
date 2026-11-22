@@ -1,57 +1,4 @@
-import { shot, type Project } from "./types";
-
-const erpShots = {
-  pipeline: shot("erp", "pipeline", 1440, 1000, {
-    ru: "Воронка сделок Evo ERP: колонки этапов с карточками сделок",
-    ro: "Pâlnia de tranzacții Evo ERP: coloane de etape cu carduri",
-    en: "Evo ERP deal pipeline: stage columns with deal cards",
-  }),
-  dashboard: shot("erp", "dashboard", 1440, 1547, {
-    ru: "Обзор Evo ERP на русском: показатели, график поступлений и последние счета",
-    ro: "Panoul Evo ERP: indicatori, graficul încasărilor și ultimele facturi",
-    en: "Evo ERP dashboard: KPIs, revenue chart and recent invoices",
-  }),
-  invoice: shot("erp", "invoice", 1440, 1274, {
-    ru: "Карточка счёта: строки, налог, оплаты и остаток",
-    ro: "Fișa facturii: rânduri, taxă, plăți și sold",
-    en: "Invoice detail: line items, tax, payments and balance",
-  }),
-  ledger: shot("erp", "ledger", 1440, 1700, {
-    ru: "Журнал складских движений и остатки по складам",
-    ro: "Jurnalul mișcărilor de stoc și soldurile pe depozite",
-    en: "Stock movement ledger and balances per warehouse",
-  }),
-  org: shot("erp", "org-chart", 1440, 1100, {
-    ru: "Организационная структура компании",
-    ro: "Structura organizațională a companiei",
-    en: "Company org chart",
-  }),
-  projects: shot("erp", "projects", 1440, 1536, {
-    ru: "Обзор проектов: прогресс, бюджет и команда",
-    ro: "Prezentarea proiectelor: progres, buget și echipă",
-    en: "Projects overview: progress, budget and team",
-  }),
-  audit: shot("erp", "audit", 1280, 720, {
-    ru: "Журнал аудита с изменениями «до и после»",
-    ro: "Jurnalul de audit cu modificări „înainte și după”",
-    en: "Audit log with before-and-after changes",
-  }),
-  pnl: shot("erp", "pnl", 1440, 1301, {
-    ru: "Отчёт о прибылях и убытках за период",
-    ro: "Raportul de profit și pierdere pe perioadă",
-    en: "Profit and loss report for a period",
-  }),
-  leaves: shot("erp", "leaves", 1440, 1000, {
-    ru: "Очередь заявок на отпуск",
-    ro: "Coada cererilor de concediu",
-    en: "Leave request queue",
-  }),
-  members: shot("erp", "members", 1440, 1333, {
-    ru: "Участники рабочего пространства и их роли",
-    ro: "Membrii spațiului de lucru și rolurile lor",
-    en: "Workspace members and their roles",
-  }),
-};
+import type { Project } from "./types";
 
 export const evoErp: Project = {
   slug: "evo-erp",
@@ -59,29 +6,15 @@ export const evoErp: Project = {
   featured: true,
   year: 2026,
   services: ["erp-operations", "crm-sales", "documents-approvals", "hr-team", "analytics-control"],
+  layout: { workflow: "relay", capabilities: "solar" },
+  moduleIcons: ["dashboard", "users", "wallet", "package", "id-card", "kanban", "shield"],
   links: {
     demo: "https://erp-xi-pink.vercel.app",
     guide: "https://erp-xi-pink.vercel.app/user-guide.html",
     repo: "https://github.com/EsinencuP/ERP",
   },
   demoCredentials: { login: "admin@erp.dev", password: "Admin123!" },
-  stack: [
-    "Next.js",
-    "React",
-    "TypeScript",
-    "Prisma",
-    "PostgreSQL",
-    "Auth.js",
-    "next-intl",
-    "TanStack Table",
-    "dnd-kit",
-    "Recharts",
-    "React-PDF",
-    "Zod",
-    "Docker Compose",
-    "Vercel",
-  ],
-  gallery: [erpShots.dashboard, erpShots.invoice, erpShots.ledger, erpShots.org, erpShots.projects, erpShots.audit],
+  stack: ["Next.js", "React", "TypeScript", "PostgreSQL", "Prisma", "Auth.js", "Zod", "next-intl", "TanStack Table", "dnd-kit", "Recharts", "React-PDF"],
   text: {
     ru: {
       name: "Evo ERP",
@@ -138,34 +71,13 @@ export const evoErp: Project = {
         },
       ],
       modules: [
-        {
-          name: "Обзор",
-          text: "Поступления, открытые сделки, товары на пополнение и заявки на отпуск на одном экране. График за шесть месяцев и лента действий.",
-        },
-        {
-          name: "CRM",
-          text: "Контакты, воронка из шести этапов с перетаскиванием, активности: звонки, письма, встречи, заметки, задачи. Групповые действия и экспорт CSV.",
-        },
-        {
-          name: "Финансы",
-          text: "Счета со строками и налогом, PDF с кириллицей, платежи и частичные оплаты, расходы по категориям, отчёт о прибылях и убытках, задолженность по давности.",
-        },
-        {
-          name: "Склад",
-          text: "Каталог с SKU и минимальным запасом, несколько складов, движения IN, OUT, ADJUSTMENT, TRANSFER и статусы «в наличии», «низкий запас», «нет в наличии».",
-        },
-        {
-          name: "Персонал",
-          text: "Каталог сотрудников, профиль с документами-ссылками, организационная структура, заявки на отпуск с согласованием и годовые лимиты.",
-        },
-        {
-          name: "Проекты",
-          text: "Задачи в канбане и списке, приоритеты, исполнители и сроки, прогресс, бюджет из расходов и временная шкала.",
-        },
-        {
-          name: "Настройки",
-          text: "Параметры компании, участники и одноразовые приглашения, пять ролей доступа, журнал аудита с просмотром изменений.",
-        },
+        { name: "Обзор", brief: "Ключевые показатели на одном экране" },
+        { name: "CRM", brief: "Контакты, воронка, активности" },
+        { name: "Финансы", brief: "Счета, оплаты, расходы, P&L" },
+        { name: "Склад", brief: "Остатки и движения по складам" },
+        { name: "Персонал", brief: "Сотрудники, структура, отпуска" },
+        { name: "Проекты", brief: "Задачи, прогресс и бюджет" },
+        { name: "Настройки", brief: "Роли, приглашения, аудит" },
       ],
       strengths: [
         "Данные компаний разделены: рабочее пространство и права определяются на сервере, а не приходят из браузера.",
@@ -182,14 +94,6 @@ export const evoErp: Project = {
         "Отпуска согласуются в системе, остатки считаются автоматически.",
         "Каждое изменение можно найти в журнале: кто, когда и что поменял.",
         "Сотрудник получает ровно тот доступ, который нужен его роли.",
-      ],
-      usageTitle: "Рабочий день в Evo ERP",
-      usage: [
-        "Утром откройте обзор: просроченные счета, складские предупреждения и ожидающие отпуска.",
-        "В CRM обновите контакты и передвиньте сделки по этапам воронки.",
-        "В течение дня регистрируйте поступления, расходы и движения товара.",
-        "В проектах отмечайте ход задач: прогресс и бюджет пересчитаются сами.",
-        "Вечером проверьте финансовую сводку; администратор может просмотреть аудит значимых изменений.",
       ],
       limits: [
         "Письма клиентам не отправляются автоматически: статус «Отправлен» и PDF не рассылают счёт.",
@@ -257,34 +161,13 @@ export const evoErp: Project = {
         },
       ],
       modules: [
-        {
-          name: "Panou",
-          text: "Încasări, tranzacții deschise, produse de reaprovizionat și cereri de concediu pe un singur ecran. Grafic pe șase luni și flux de acțiuni.",
-        },
-        {
-          name: "CRM",
-          text: "Contacte, pâlnie din șase etape cu drag-and-drop, activități: apeluri, e-mailuri, întâlniri, notițe, sarcini. Acțiuni în grup și export CSV.",
-        },
-        {
-          name: "Finanțe",
-          text: "Facturi cu rânduri și taxă, PDF cu chirilice, plăți și achitări parțiale, cheltuieli pe categorii, raport de profit și pierdere, vechimea creanțelor.",
-        },
-        {
-          name: "Depozit",
-          text: "Catalog cu SKU și stoc minim, mai multe depozite, mișcări IN, OUT, ADJUSTMENT, TRANSFER și statusurile „în stoc”, „stoc redus”, „lipsă”.",
-        },
-        {
-          name: "Personal",
-          text: "Catalogul angajaților, profil cu documente-link, structură organizațională, cereri de concediu cu aprobare și limite anuale.",
-        },
-        {
-          name: "Proiecte",
-          text: "Sarcini în kanban și listă, priorități, executanți și termene, progres, buget din cheltuieli și cronologie.",
-        },
-        {
-          name: "Setări",
-          text: "Parametrii companiei, membri și invitații de unică folosință, cinci roluri de acces, jurnal de audit cu vizualizarea modificărilor.",
-        },
+        { name: "Panou", brief: "Indicatorii cheie pe un singur ecran" },
+        { name: "CRM", brief: "Contacte, pâlnie, activități" },
+        { name: "Finanțe", brief: "Facturi, plăți, cheltuieli, P&L" },
+        { name: "Depozit", brief: "Stocuri și mișcări pe depozite" },
+        { name: "Personal", brief: "Angajați, structură, concedii" },
+        { name: "Proiecte", brief: "Sarcini, progres și buget" },
+        { name: "Setări", brief: "Roluri, invitații, audit" },
       ],
       strengths: [
         "Datele companiilor sunt separate: spațiul de lucru și drepturile se stabilesc pe server, nu vin din browser.",
@@ -301,14 +184,6 @@ export const evoErp: Project = {
         "Concediile se aprobă în sistem, iar soldurile se calculează automat.",
         "Orice modificare se găsește în jurnal: cine, când și ce a schimbat.",
         "Angajatul primește exact accesul necesar rolului său.",
-      ],
-      usageTitle: "O zi de lucru în Evo ERP",
-      usage: [
-        "Dimineața deschideți panoul: facturi restante, avertizări de stoc și concedii în așteptare.",
-        "În CRM actualizați contactele și mutați tranzacțiile pe etapele pâlniei.",
-        "Pe parcursul zilei înregistrați încasările, cheltuielile și mișcările de marfă.",
-        "În proiecte marcați progresul sarcinilor: progresul și bugetul se recalculează singure.",
-        "Seara verificați sinteza financiară; administratorul poate consulta auditul modificărilor importante.",
       ],
       limits: [
         "E-mailurile către clienți nu se trimit automat: statusul „Trimis” și PDF-ul nu expediază factura.",
@@ -376,34 +251,13 @@ export const evoErp: Project = {
         },
       ],
       modules: [
-        {
-          name: "Dashboard",
-          text: "Revenue, open deals, low-stock products and pending leave on one screen. Six-month chart and activity feed.",
-        },
-        {
-          name: "CRM",
-          text: "Contacts, a six-stage drag-and-drop pipeline, activities: calls, emails, meetings, notes, tasks. Bulk actions and CSV export.",
-        },
-        {
-          name: "Finance",
-          text: "Invoices with line items and tax, PDF with Cyrillic support, payments and partial payments, expenses by category, P&L report, receivables aging.",
-        },
-        {
-          name: "Inventory",
-          text: "Catalogue with SKU and minimum stock, multiple warehouses, IN, OUT, ADJUSTMENT and TRANSFER movements, and in-stock, low-stock and out-of-stock statuses.",
-        },
-        {
-          name: "HR",
-          text: "Employee directory, profile with document links, org chart, leave requests with approval and annual allowances.",
-        },
-        {
-          name: "Projects",
-          text: "Tasks in kanban and list views, priorities, assignees and due dates, progress, budget from expenses and a timeline.",
-        },
-        {
-          name: "Settings",
-          text: "Company settings, members and single-use invitations, five access roles, audit log with change view.",
-        },
+        { name: "Dashboard", brief: "Key figures on one screen" },
+        { name: "CRM", brief: "Contacts, pipeline, activities" },
+        { name: "Finance", brief: "Invoices, payments, expenses, P&L" },
+        { name: "Inventory", brief: "Stock and movements by warehouse" },
+        { name: "HR", brief: "People, org chart, time off" },
+        { name: "Projects", brief: "Tasks, progress and budget" },
+        { name: "Settings", brief: "Roles, invitations, audit" },
       ],
       strengths: [
         "Company data is separated: the workspace and permissions are resolved on the server, never taken from the browser.",
@@ -421,14 +275,6 @@ export const evoErp: Project = {
         "Every change can be found in the log: who changed what, and when.",
         "Each employee gets exactly the access their role needs.",
       ],
-      usageTitle: "A working day in Evo ERP",
-      usage: [
-        "In the morning, open the dashboard: overdue invoices, stock warnings and pending leave.",
-        "In the CRM, update contacts and move deals along the pipeline.",
-        "During the day, record payments received, expenses and stock movements.",
-        "In projects, mark task progress: progress and budget recalculate on their own.",
-        "In the evening, check the finance summary; an administrator can review the audit of significant changes.",
-      ],
       limits: [
         "Customer emails are not sent automatically: the Sent status and the PDF don't deliver the invoice.",
         "The administrator passes the invitation link to a colleague personally.",
@@ -441,223 +287,4 @@ export const evoErp: Project = {
         "Evo ERP is an ERP system for CRM, finance, inventory, HR and projects with access roles and audit. Public demo, workflows and module overview.",
     },
   },
-  demo: [
-    {
-      slug: "crm",
-      shot: erpShots.pipeline,
-      text: {
-        ru: {
-          title: "CRM и воронка сделок",
-          summary: "Контакты, история общения и шесть этапов продаж. Сделка перемещается перетаскиванием или с клавиатуры.",
-          points: [
-            "Создайте контакт: имя, компания, статус и ответственный.",
-            "Откройте карточку контакта: связанные сделки и лента активностей.",
-            "Перенесите сделку в следующий этап. При конфликте карточка вернётся к подтверждённому состоянию.",
-            "Менеджеры и администраторы выгружают контакты в CSV.",
-          ],
-        },
-        ro: {
-          title: "CRM și pâlnia de tranzacții",
-          summary: "Contacte, istoricul comunicării și șase etape de vânzare. Tranzacția se mută prin tragere sau de la tastatură.",
-          points: [
-            "Creați un contact: nume, companie, status și responsabil.",
-            "Deschideți fișa contactului: tranzacțiile asociate și fluxul de activități.",
-            "Mutați tranzacția la etapa următoare. La conflict, cardul revine la starea confirmată.",
-            "Managerii și administratorii exportă contactele în CSV.",
-          ],
-        },
-        en: {
-          title: "CRM and deal pipeline",
-          summary: "Contacts, communication history and six sales stages. Deals move by dragging or from the keyboard.",
-          points: [
-            "Create a contact: name, company, status and owner.",
-            "Open the contact profile: related deals and the activity feed.",
-            "Move a deal to the next stage. On conflict, the card returns to its confirmed state.",
-            "Managers and administrators export contacts to CSV.",
-          ],
-        },
-      },
-    },
-    {
-      slug: "finance",
-      shot: erpShots.invoice,
-      text: {
-        ru: {
-          title: "Счета, оплаты и P&L",
-          summary: "Счёт со строками и налогом, автоматический номер, PDF и регистрация оплат, включая частичные.",
-          points: [
-            "Выберите клиента из CRM и добавьте строки: 2 × €100 при налоге 20% дают €240.",
-            "Сохраните черновик, и номер вида INV-2026-0001 присвоится сам.",
-            "Зарегистрируйте оплату: остаток долга и статус обновятся.",
-            "В отчёте P&L чистая прибыль равна выручке минус расходы за период.",
-          ],
-        },
-        ro: {
-          title: "Facturi, plăți și P&L",
-          summary: "Factură cu rânduri și taxă, număr automat, PDF și înregistrarea plăților, inclusiv parțiale.",
-          points: [
-            "Alegeți clientul din CRM și adăugați rânduri: 2 × €100 cu taxă de 20% dau €240.",
-            "Salvați ciorna, iar numărul de tip INV-2026-0001 se atribuie singur.",
-            "Înregistrați plata: soldul datoriei și statusul se actualizează.",
-            "În raportul P&L profitul net este veniturile minus cheltuielile perioadei.",
-          ],
-        },
-        en: {
-          title: "Invoices, payments and P&L",
-          summary: "Invoices with line items and tax, automatic numbering, PDF and payment recording, including partial payments.",
-          points: [
-            "Pick a CRM customer and add lines: 2 × €100 at 20% tax gives €240.",
-            "Save the draft, and a number like INV-2026-0001 is assigned automatically.",
-            "Record a payment: the outstanding balance and status update.",
-            "In the P&L report, net profit is revenue minus expenses for the period.",
-          ],
-        },
-      },
-    },
-    {
-      slug: "inventory",
-      shot: erpShots.ledger,
-      interactive: "stock-ledger",
-      text: {
-        ru: {
-          title: "Склад и движения товара",
-          summary: "Остатки на нескольких складах и неизменяемый журнал движений. Проведите движения сами в интерактивной модели.",
-          points: [
-            "IN увеличивает остаток выбранного склада.",
-            "OUT уменьшает остаток; списать больше наличия нельзя.",
-            "ADJUSTMENT — изменение со знаком: +3 добавляет, −2 убирает.",
-            "TRANSFER переносит количество со склада-источника на склад-получатель.",
-          ],
-        },
-        ro: {
-          title: "Depozit și mișcări de marfă",
-          summary: "Solduri pe mai multe depozite și jurnal nemodificabil al mișcărilor. Înregistrați singuri mișcări în modelul interactiv.",
-          points: [
-            "IN mărește soldul depozitului ales.",
-            "OUT micșorează soldul; nu se poate scoate mai mult decât există.",
-            "ADJUSTMENT este o modificare cu semn: +3 adaugă, −2 scade.",
-            "TRANSFER mută cantitatea din depozitul sursă în depozitul destinație.",
-          ],
-        },
-        en: {
-          title: "Inventory and stock movements",
-          summary: "Balances across several warehouses and an immutable movement ledger. Post movements yourself in the interactive model.",
-          points: [
-            "IN increases the selected warehouse balance.",
-            "OUT decreases it; you can't write off more than is on hand.",
-            "ADJUSTMENT is a signed change: +3 adds, −2 removes.",
-            "TRANSFER moves quantity from a source warehouse to a destination.",
-          ],
-        },
-      },
-    },
-    {
-      slug: "hr",
-      shot: erpShots.org,
-      text: {
-        ru: {
-          title: "Персонал и отпуска",
-          summary: "Каталог сотрудников, структура подчинения и заявки на отпуск с согласованием.",
-          points: [
-            "Карточка сотрудника и доступ в ERP — разные записи: логин выдаётся через участников.",
-            "Дерево структуры строится по полю «руководитель»; циклическое подчинение запрещено.",
-            "Рабочие дни отпуска считаются без суббот и воскресений, обе границы включены.",
-            "Пересекающиеся заявки одного сотрудника отклоняются.",
-          ],
-        },
-        ro: {
-          title: "Personal și concedii",
-          summary: "Catalogul angajaților, structura de subordonare și cererile de concediu cu aprobare.",
-          points: [
-            "Fișa angajatului și accesul în ERP sunt înregistrări diferite: contul se acordă prin membri.",
-            "Arborele structurii se construiește după câmpul „conducător”; subordonarea circulară este interzisă.",
-            "Zilele lucrătoare de concediu se calculează fără sâmbete și duminici, inclusiv ambele capete.",
-            "Cererile suprapuse ale aceluiași angajat sunt respinse.",
-          ],
-        },
-        en: {
-          title: "People and leave",
-          summary: "Employee directory, reporting structure and leave requests with approval.",
-          points: [
-            "An employee record and ERP access are separate: logins are granted through members.",
-            "The org tree is built from the manager field; circular reporting is not allowed.",
-            "Leave counts working days only, excluding weekends, with both ends included.",
-            "Overlapping requests for the same employee are rejected.",
-          ],
-        },
-      },
-    },
-    {
-      slug: "projects",
-      shot: erpShots.projects,
-      text: {
-        ru: {
-          title: "Проекты и задачи",
-          summary: "Канбан и список задач, прогресс по готовым задачам и бюджет из расходов.",
-          points: [
-            "Задача проходит колонки: к выполнению, в работе, на проверке, готово.",
-            "Прогресс — доля готовых задач от общего числа.",
-            "Использованный бюджет складывается из расходов, привязанных к проекту.",
-            "Временная шкала показывает проекты с заданными датами.",
-          ],
-        },
-        ro: {
-          title: "Proiecte și sarcini",
-          summary: "Kanban și listă de sarcini, progres după sarcinile finalizate și buget din cheltuieli.",
-          points: [
-            "Sarcina trece prin coloane: de făcut, în lucru, în verificare, gata.",
-            "Progresul este ponderea sarcinilor finalizate din total.",
-            "Bugetul consumat se compune din cheltuielile legate de proiect.",
-            "Cronologia arată proiectele cu date stabilite.",
-          ],
-        },
-        en: {
-          title: "Projects and tasks",
-          summary: "Kanban and list views, progress from completed tasks and budget from expenses.",
-          points: [
-            "A task moves through columns: to do, in progress, in review, done.",
-            "Progress is the share of completed tasks.",
-            "Spent budget is the sum of expenses linked to the project.",
-            "The timeline shows projects that have dates set.",
-          ],
-        },
-      },
-    },
-    {
-      slug: "access",
-      shot: erpShots.audit,
-      text: {
-        ru: {
-          title: "Доступы и аудит",
-          summary: "Пять ролей, одноразовые приглашения и журнал изменений «до и после».",
-          points: [
-            "Приглашение — приватная ссылка на семь дней; её можно отозвать.",
-            "Деактивация сохраняет записи и историю, но отзывает сессии пользователя.",
-            "Последнего активного администратора убрать нельзя.",
-            "В журнале аудита видны автор, модуль, действие и значения до и после.",
-          ],
-        },
-        ro: {
-          title: "Accese și audit",
-          summary: "Cinci roluri, invitații de unică folosință și jurnal de modificări „înainte și după”.",
-          points: [
-            "Invitația este un link privat valabil șapte zile; poate fi revocată.",
-            "Dezactivarea păstrează înregistrările și istoricul, dar închide sesiunile utilizatorului.",
-            "Ultimul administrator activ nu poate fi eliminat.",
-            "Jurnalul de audit arată autorul, modulul, acțiunea și valorile înainte și după.",
-          ],
-        },
-        en: {
-          title: "Access and audit",
-          summary: "Five roles, single-use invitations and a before-and-after change log.",
-          points: [
-            "An invitation is a private link valid for seven days; it can be revoked.",
-            "Deactivation keeps records and history but ends the user's sessions.",
-            "The last active administrator cannot be removed.",
-            "The audit log shows author, module, action and before and after values.",
-          ],
-        },
-      },
-    },
-  ],
 };

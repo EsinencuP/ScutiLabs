@@ -1,27 +1,4 @@
-import { shot, type Project } from "./types";
-
-const s = {
-  editor: shot("ai-pdf-editor", "editor", 1280, 720, {
-    ru: "AI PDF Editor после проверенной правки: документ, панель замены и отчёт проверки экспорта",
-    ro: "AI PDF Editor după o editare validată: documentul, panoul de înlocuire și raportul de validare",
-    en: "AI PDF Editor after a validated edit: document, replacement panel and export validation report",
-  }),
-  welcome: shot("ai-pdf-editor", "welcome", 1280, 720, {
-    ru: "Стартовый экран: загрузка PDF или пример документа",
-    ro: "Ecranul de start: încărcarea unui PDF sau un document de exemplu",
-    en: "Start screen: upload a PDF or open a sample document",
-  }),
-  review: shot("ai-pdf-editor", "review", 1280, 720, {
-    ru: "Проверка предложенной замены перед применением",
-    ro: "Verificarea înlocuirii propuse înainte de aplicare",
-    en: "Reviewing a proposed replacement before applying it",
-  }),
-  batch: shot("ai-pdf-editor", "batch-review", 1280, 720, {
-    ru: "Пакет правок: очередь замен с общим применением",
-    ro: "Editări în lot: coada înlocuirilor cu aplicare comună",
-    en: "Batch editing: a queue of replacements applied together",
-  }),
-};
+import type { Project } from "./types";
 
 export const aiPdfEditor: Project = {
   slug: "ai-pdf-editor",
@@ -29,23 +6,10 @@ export const aiPdfEditor: Project = {
   featured: true,
   year: 2026,
   services: ["documents-approvals"],
+  layout: { workflow: "orbit", capabilities: "icons" },
+  moduleIcons: ["search", "layers", "sparkles", "scan-eye", "history", "image"],
   links: { demo: "https://ai-pdf-editor.pages.dev", repo: "https://github.com/academ1cian/ai-pdf-editor" },
-  stack: [
-    "React",
-    "TypeScript",
-    "Vite",
-    "MuPDF (WebAssembly)",
-    "PDF.js",
-    "Tesseract.js",
-    "Zod",
-    "Cloudflare Pages",
-    "Cloudflare Workers",
-    "Durable Objects",
-    "Groq",
-    "Playwright",
-    "Vitest",
-  ],
-  gallery: [s.welcome, s.review, s.batch, s.editor],
+  stack: ["React", "TypeScript", "MuPDF (WebAssembly)", "PDF.js", "Tesseract.js", "Zod", "Groq API"],
   text: {
     ru: {
       name: "AI PDF Editor",
@@ -97,12 +61,12 @@ export const aiPdfEditor: Project = {
         },
       ],
       modules: [
-        { name: "Просмотр и поиск", text: "Многостраничный просмотр, масштаб, выделение строк, точный поиск и выбор нужного вхождения среди повторов." },
-        { name: "Пакетные правки", text: "Очередь замен с включением и исключением, просмотр и применение одним шагом, одна отмена на весь пакет." },
-        { name: "ИИ-ассистент", text: "Правки, описанные словами, с последовательными уточнениями. Ставку, начисления и итог в счёте можно поправить и без облака." },
-        { name: "Проверка экспорта", text: "Повторное открытие, сверка текста в изменённой области, позиций соседних символов, ссылок и пикселей всех страниц." },
-        { name: "История", text: "Неизменяемый оригинал, снимки после каждой проверенной правки, отмена, сброс и журнал изменений." },
-        { name: "Изображения", text: "Отдельные инструменты для изображений и страниц-сканов; надпись логотипа правится локально." },
+        { name: "Просмотр и поиск", brief: "Поиск текста и нужного вхождения" },
+        { name: "Пакетные правки", brief: "Очередь замен одним шагом" },
+        { name: "ИИ-ассистент", brief: "Правки, описанные словами" },
+        { name: "Проверка экспорта", brief: "Попиксельная сверка результата" },
+        { name: "История", brief: "Отмена, снимки, журнал" },
+        { name: "Изображения", brief: "Сканы и надпись логотипа" },
       ],
       strengths: [
         "Правка меняет исходный текст документа, а не накладывает поверх него заплатку.",
@@ -117,14 +81,6 @@ export const aiPdfEditor: Project = {
         "Суммы в счёте пересчитываются по правилам, а не на глаз.",
         "Конфиденциальный документ остаётся на устройстве.",
         "Получатель видит тот же документ: шрифты, отступы и ссылки на месте.",
-      ],
-      usageTitle: "Как пользоваться",
-      usage: [
-        "Откройте редактор и перетащите PDF или выберите пример счёта.",
-        "Выделите текст и введите замену или опишите правку во вкладке ИИ-ассистента.",
-        "Проверьте предложение: что было, что станет и помещается ли текст.",
-        "При необходимости уточните запрос — прежние правки сохранятся.",
-        "Скачайте PDF: файл доступен только после успешной проверки.",
       ],
       limits: [
         "Формы, подписи, зашифрованные и повреждённые файлы, повёрнутый текст и сложные таблицы могут не поддерживаться.",
@@ -186,12 +142,12 @@ export const aiPdfEditor: Project = {
         },
       ],
       modules: [
-        { name: "Vizualizare și căutare", text: "Vizualizare pe mai multe pagini, zoom, selectarea rândurilor, căutare exactă și alegerea apariției dorite." },
-        { name: "Editări în lot", text: "Coadă de înlocuiri cu includere și excludere, verificare și aplicare într-un pas, o singură anulare pentru tot lotul." },
-        { name: "Asistent AI", text: "Modificări descrise în cuvinte, cu precizări succesive. Tariful, taxele și totalul unei facturi se pot corecta și fără cloud." },
-        { name: "Validarea exportului", text: "Redeschidere, verificarea textului din zona schimbată, a pozițiilor caracterelor vecine, a linkurilor și a pixelilor tuturor paginilor." },
-        { name: "Istoric", text: "Original imuabil, instantanee după fiecare editare validată, anulare, resetare și jurnal de modificări." },
-        { name: "Imagini", text: "Instrumente separate pentru imagini și pagini scanate; textul siglei se editează local." },
+        { name: "Vizualizare și căutare", brief: "Căutarea textului și a apariției dorite" },
+        { name: "Editări în lot", brief: "O coadă de înlocuiri într-un pas" },
+        { name: "Asistent AI", brief: "Editări descrise în cuvinte" },
+        { name: "Validarea exportului", brief: "Verificarea rezultatului pixel cu pixel" },
+        { name: "Istoric", brief: "Anulare, instantanee, jurnal" },
+        { name: "Imagini", brief: "Scanări și textul siglei" },
       ],
       strengths: [
         "Editarea schimbă textul original al documentului, nu pune un petic peste el.",
@@ -206,14 +162,6 @@ export const aiPdfEditor: Project = {
         "Sumele din factură se recalculează după reguli, nu din ochi.",
         "Documentul confidențial rămâne pe dispozitiv.",
         "Destinatarul vede același document: fonturile, spațierea și linkurile sunt la locul lor.",
-      ],
-      usageTitle: "Cum se folosește",
-      usage: [
-        "Deschideți editorul și trageți un PDF sau alegeți factura de exemplu.",
-        "Selectați textul și introduceți înlocuirea sau descrieți modificarea în fila asistentului AI.",
-        "Verificați propunerea: ce era, ce va fi și dacă textul încape.",
-        "La nevoie precizați cererea — editările anterioare se păstrează.",
-        "Descărcați PDF-ul: fișierul este disponibil doar după validare.",
       ],
       limits: [
         "Formularele, semnăturile, fișierele criptate sau deteriorate, textul rotit și tabelele complexe pot să nu fie suportate.",
@@ -275,12 +223,12 @@ export const aiPdfEditor: Project = {
         },
       ],
       modules: [
-        { name: "Viewing and search", text: "Multi-page viewer, zoom, line selection, exact find and choice of the right occurrence among repeats." },
-        { name: "Batch edits", text: "A queue of replacements with include and exclude, review and apply in one step, one undo for the whole batch." },
-        { name: "AI assistant", text: "Edits described in words with follow-up refinements. Invoice rate, charges and total can be fixed without the cloud." },
-        { name: "Export validation", text: "Reopen, check the changed region's text, neighbouring glyph positions, links and pixels on every page." },
-        { name: "History", text: "Immutable original, snapshots after each validated edit, undo, reset and a change log." },
-        { name: "Images", text: "Separate tools for images and scanned pages; logo lettering is edited locally." },
+        { name: "Viewing and search", brief: "Find text and the right occurrence" },
+        { name: "Batch edits", brief: "A queue of edits in one step" },
+        { name: "AI assistant", brief: "Edits described in words" },
+        { name: "Export validation", brief: "Pixel-level result check" },
+        { name: "History", brief: "Undo, snapshots, change log" },
+        { name: "Images", brief: "Scans and logo lettering" },
       ],
       strengths: [
         "Edits change the document's original text rather than patching over it.",
@@ -296,14 +244,6 @@ export const aiPdfEditor: Project = {
         "A confidential document stays on the device.",
         "The recipient sees the same document: fonts, spacing and links are intact.",
       ],
-      usageTitle: "How to use it",
-      usage: [
-        "Open the editor and drop a PDF or pick the sample invoice.",
-        "Select text and type a replacement, or describe the change in the AI assistant tab.",
-        "Review the proposal: what it was, what it will be and whether it fits.",
-        "Refine the request if needed — earlier edits are kept.",
-        "Download the PDF: the file is available only after validation passes.",
-      ],
       limits: [
         "Forms, signatures, encrypted or damaged files, rotated text and complex tables may be unsupported.",
         "Scanned pages without a text layer are edited with image tools, not as text.",
@@ -315,111 +255,4 @@ export const aiPdfEditor: Project = {
         "AI PDF Editor is a web editor for precise edits in finished PDFs: replace text and amounts while keeping the layout, a consent-based AI assistant and validation of every result.",
     },
   },
-  demo: [
-    {
-      slug: "open",
-      shot: s.welcome,
-      text: {
-        ru: {
-          title: "Открытие документа",
-          summary: "PDF открывается прямо в браузере: свой файл или пример счёта.",
-          points: [
-            "Поддерживаются PDF с выделяемым текстом, до 15 МБ и 80 страниц.",
-            "Оригинал не меняется: правки сохраняются в отдельные проверенные снимки.",
-            "Ручные правки выполняются на устройстве, регистрация не нужна.",
-          ],
-        },
-        ro: {
-          title: "Deschiderea documentului",
-          summary: "PDF-ul se deschide direct în browser: propriul fișier sau o factură de exemplu.",
-          points: [
-            "Sunt suportate PDF-uri cu text selectabil, până la 15 MB și 80 de pagini.",
-            "Originalul nu se schimbă: editările se salvează în instantanee validate separate.",
-            "Editările manuale rulează pe dispozitiv, fără înregistrare.",
-          ],
-        },
-        en: {
-          title: "Opening a document",
-          summary: "The PDF opens right in the browser: your own file or a sample invoice.",
-          points: [
-            "PDFs with selectable text, up to 15 MB and 80 pages.",
-            "The original never changes: edits are stored as separate validated snapshots.",
-            "Manual edits run on the device, with no account.",
-          ],
-        },
-      },
-    },
-    {
-      slug: "review",
-      shot: s.review,
-      text: {
-        ru: {
-          title: "Правка и просмотр замены",
-          summary: "Каждая замена показывается до применения: текст, страница, шрифт и посадка в строку.",
-          points: [
-            "Текст находится поиском или выделением, в том числе несколько фрагментов на разных страницах.",
-            "При повторах выбирается нужное вхождение.",
-            "Если текст не помещается, редактор показывает причину отказа.",
-            "Пакет правок применяется одним шагом и отменяется одной кнопкой.",
-          ],
-        },
-        ro: {
-          title: "Editare și verificarea înlocuirii",
-          summary: "Fiecare înlocuire este afișată înainte de aplicare: text, pagină, font și încadrare.",
-          points: [
-            "Textul se găsește prin căutare sau selecție, inclusiv mai multe fragmente pe pagini diferite.",
-            "La repetări se alege apariția dorită.",
-            "Dacă textul nu încape, editorul arată motivul refuzului.",
-            "Lotul de editări se aplică într-un pas și se anulează cu un singur buton.",
-          ],
-        },
-        en: {
-          title: "Editing and review",
-          summary: "Every replacement is shown before it applies: text, page, font and fit.",
-          points: [
-            "Text is found by search or selection, including several fragments across pages.",
-            "For repeats, you choose the right occurrence.",
-            "If the text doesn't fit, the editor explains why it was rejected.",
-            "A batch applies in one step and is undone with one button.",
-          ],
-        },
-      },
-    },
-    {
-      slug: "ai-and-export",
-      shot: s.editor,
-      text: {
-        ru: {
-          title: "ИИ-ассистент и проверка экспорта",
-          summary: "Правку можно описать словами и уточнять по шагам; скачивается только проверенный документ.",
-          points: [
-            "Перед отправкой показывается, какие строки уйдут провайдеру, и нужно согласие.",
-            "Уточнение сохраняет прежние правки; изменение раннего запроса отменяет зависящие от него.",
-            "Экспорт заново открывается и сверяется по тексту, ссылкам и пикселям.",
-            "Одна отмена возвращает документ к состоянию до пакета правок.",
-          ],
-        },
-        ro: {
-          title: "Asistentul AI și validarea exportului",
-          summary: "Modificarea se descrie în cuvinte și se precizează pas cu pas; se descarcă doar documentul validat.",
-          points: [
-            "Înainte de trimitere se arată ce rânduri ajung la furnizor și este necesar acordul.",
-            "Precizarea păstrează editările anterioare; schimbarea unei cereri timpurii le anulează pe cele dependente.",
-            "Exportul este redeschis și verificat după text, linkuri și pixeli.",
-            "O singură anulare readuce documentul la starea dinaintea lotului.",
-          ],
-        },
-        en: {
-          title: "AI assistant and export validation",
-          summary: "Describe the change in words and refine it step by step; only a validated document is downloaded.",
-          points: [
-            "Before sending, you see which lines go to the provider, and consent is required.",
-            "Refinements keep earlier edits; editing an earlier request invalidates the ones that depend on it.",
-            "The export is reopened and checked for text, links and pixels.",
-            "One undo returns the document to its state before the batch.",
-          ],
-        },
-      },
-    },
-  ],
 };

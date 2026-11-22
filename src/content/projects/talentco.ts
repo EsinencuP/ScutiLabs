@@ -1,32 +1,4 @@
-import { shot, type Project } from "./types";
-
-const s = {
-  home: shot("talentco", "home", 1440, 900, {
-    ru: "Главная TalentCo: задачи сотрудника, просрочки, проекты и доступность команды",
-    ro: "Pagina principală TalentCo: sarcinile angajatului, restanțe, proiecte și disponibilitatea echipei",
-    en: "TalentCo home: an employee's tasks, overdue items, projects and team availability",
-  }),
-  pipeline: shot("talentco", "pipeline", 1440, 900, {
-    ru: "Воронка кандидатов по этапам с покрытием требований вакансии",
-    ro: "Pâlnia candidaților pe etape, cu acoperirea cerințelor postului",
-    en: "Candidate pipeline by stage with job requirement coverage",
-  }),
-  screening: shot("talentco", "screening", 1440, 900, {
-    ru: "ИИ-скрининг: очередь резюме и проверка требований вакансии",
-    ro: "Screening AI: coada CV-urilor și verificarea cerințelor postului",
-    en: "AI screening: resume queue and job requirement checks",
-  }),
-  automations: shot("talentco", "automations", 1440, 900, {
-    ru: "Правила автоматизации найма с версиями и журналом выполнения",
-    ro: "Reguli de automatizare a recrutării, cu versiuni și jurnal de execuție",
-    en: "Recruiting automation rules with versions and an execution log",
-  }),
-  timeOff: shot("talentco", "time-off", 1440, 900, {
-    ru: "Календарь отпусков команды по месяцам",
-    ro: "Calendarul lunar al concediilor echipei",
-    en: "Monthly team time-off calendar",
-  }),
-};
+import type { Project } from "./types";
 
 export const talentco: Project = {
   slug: "talentco-workspace",
@@ -34,9 +6,10 @@ export const talentco: Project = {
   featured: true,
   year: 2026,
   services: ["hr-team", "analytics-control"],
+  layout: { workflow: "relay", capabilities: "table" },
+  moduleIcons: ["home", "target", "calendar-range", "briefcase", "checklist", "scan-search", "zap", "chart"],
   links: { demo: "https://talentco-team-workspace-demo.academ1cian.chatgpt.site/" },
   stack: [],
-  gallery: [s.home, s.timeOff, s.pipeline, s.screening, s.automations],
   text: {
     ru: {
       name: "TalentCo Workspace",
@@ -89,14 +62,14 @@ export const talentco: Project = {
         },
       ],
       modules: [
-        { name: "Главная", text: "Мои задачи, просроченные дела, активные проекты, доступность команды, дни рождения и новости компании." },
-        { name: "Проекты и ответственность", text: "Общие цели с владельцами, задачами и контекстом; зоны ответственности с приоритетами и сроками." },
-        { name: "Люди и отпуска", text: "Справочник сотрудников, календарь отпусков с фильтрами по людям и отделам, лента активности, архив." },
-        { name: "Вакансии и воронка", text: "Доска и таблица кандидатов по этапам — от отклика до оффера; сортировка по покрытию требований и времени на этапе." },
-        { name: "Интервью и оценки", text: "Планирование в часовом поясе компании, список и календарь, оценочные листы, контроль недостающих отзывов." },
-        { name: "ИИ-скрининг", text: "Очередь резюме: извлечение профиля, ручная правка, сравнение с требованиями вакансии, связь с существующим кандидатом." },
-        { name: "Автоматизации", text: "Правила на событиях найма с версиями, паузой, журналом выполнения и безопасным повтором." },
-        { name: "Отчёты и настройки", text: "Метрики найма с выгрузкой CSV; роли, шаблоны писем, исходящие и параметры рабочего пространства." },
+        { name: "Главная", brief: "Задачи и новости команды" },
+        { name: "Проекты и ответственность", brief: "Цели, владельцы, сроки" },
+        { name: "Люди и отпуска", brief: "Справочник и календарь отпусков" },
+        { name: "Вакансии и воронка", brief: "Кандидаты по этапам найма" },
+        { name: "Интервью и оценки", brief: "Расписание и оценочные листы" },
+        { name: "ИИ-скрининг", brief: "Разбор резюме по требованиям" },
+        { name: "Автоматизации", brief: "Правила на событиях найма" },
+        { name: "Отчёты и настройки", brief: "Метрики найма и выгрузка CSV" },
       ],
       strengths: [
         "Интранет и найм используют общий справочник людей и одну навигацию.",
@@ -110,14 +83,6 @@ export const talentco: Project = {
         "Кандидаты не теряются между этапами: у каждого есть следующий шаг.",
         "Решение о найме опирается на требования вакансии и структурированные оценки.",
         "Руководитель видит, на каком этапе найм замедляется.",
-      ],
-      usageTitle: "Как посмотреть демо",
-      usage: [
-        "Откройте демо — вход выполняется автоматически под учебным администратором.",
-        "Смените роль в верхней панели, чтобы увидеть, как меняются права.",
-        "В разделе Pipeline переведите кандидата на следующий этап.",
-        "Откройте AI Screening и запустите примеры резюме: ключ API не нужен.",
-        "Кнопка Reset Demo вернёт исходные данные.",
       ],
       limits: [
         "Данные вымышленные и хранятся только в вашем браузере.",
@@ -181,14 +146,14 @@ export const talentco: Project = {
         },
       ],
       modules: [
-        { name: "Pagina principală", text: "Sarcinile mele, restanțe, proiecte active, disponibilitatea echipei, zile de naștere și noutăți." },
-        { name: "Proiecte și responsabilități", text: "Obiective comune cu responsabili, sarcini și context; zone de responsabilitate cu priorități și termene." },
-        { name: "Oameni și concedii", text: "Catalogul angajaților, calendarul concediilor cu filtre pe persoane și departamente, flux de activitate, arhivă." },
-        { name: "Posturi și pâlnie", text: "Tablă și tabel de candidați pe etape — de la aplicare la ofertă; sortare după acoperirea cerințelor și timpul pe etapă." },
-        { name: "Interviuri și evaluări", text: "Programare în fusul orar al companiei, listă și calendar, fișe de evaluare, controlul feedback-ului lipsă." },
-        { name: "Screening AI", text: "Coada CV-urilor: extragerea profilului, corectare manuală, comparare cu cerințele postului, legare la un candidat existent." },
-        { name: "Automatizări", text: "Reguli pe evenimentele recrutării, cu versiuni, pauză, jurnal de execuție și reluare sigură." },
-        { name: "Rapoarte și setări", text: "Indicatori de recrutare cu export CSV; roluri, șabloane de e-mail, mesaje în așteptare și parametrii spațiului de lucru." },
+        { name: "Pagina principală", brief: "Sarcinile și noutățile echipei" },
+        { name: "Proiecte și responsabilități", brief: "Obiective, responsabili, termene" },
+        { name: "Oameni și concedii", brief: "Catalogul și calendarul concediilor" },
+        { name: "Posturi și pâlnie", brief: "Candidați pe etapele recrutării" },
+        { name: "Interviuri și evaluări", brief: "Programări și fișe de evaluare" },
+        { name: "Screening AI", brief: "Analiza CV-urilor după cerințe" },
+        { name: "Automatizări", brief: "Reguli pe evenimentele recrutării" },
+        { name: "Rapoarte și setări", brief: "Indicatori de recrutare și export CSV" },
       ],
       strengths: [
         "Intranetul și recrutarea folosesc un catalog comun de oameni și o singură navigare.",
@@ -202,14 +167,6 @@ export const talentco: Project = {
         "Candidații nu se pierd între etape: fiecare are un pas următor.",
         "Decizia de angajare se bazează pe cerințele postului și pe evaluări structurate.",
         "Conducătorul vede la ce etapă încetinește recrutarea.",
-      ],
-      usageTitle: "Cum vedeți demonstrația",
-      usage: [
-        "Deschideți demo-ul — intrarea se face automat ca administrator de exemplu.",
-        "Schimbați rolul în bara de sus pentru a vedea cum se schimbă drepturile.",
-        "În secțiunea Pipeline mutați un candidat la etapa următoare.",
-        "Deschideți AI Screening și rulați CV-urile de exemplu: nu este nevoie de cheie API.",
-        "Butonul Reset Demo readuce datele inițiale.",
       ],
       limits: [
         "Datele sunt fictive și se păstrează doar în browserul dumneavoastră.",
@@ -273,14 +230,14 @@ export const talentco: Project = {
         },
       ],
       modules: [
-        { name: "Home", text: "My tasks, overdue items, active projects, team availability, birthdays and company news." },
-        { name: "Projects and responsibilities", text: "Shared goals with owners, tasks and context; areas of responsibility with priorities and deadlines." },
-        { name: "People and time off", text: "Employee directory, time-off calendar filtered by person and department, activity feed, archive." },
-        { name: "Jobs and pipeline", text: "Board and table of candidates by stage, from application to offer; sorting by requirement coverage and time in stage." },
-        { name: "Interviews and scorecards", text: "Scheduling in the company time zone, list and calendar, scorecards, tracking of missing feedback." },
-        { name: "AI screening", text: "Resume queue: profile extraction, manual correction, comparison with job requirements, linking to an existing candidate." },
-        { name: "Automations", text: "Rules on recruiting events with versions, pause, an execution log and safe retries." },
-        { name: "Reports and settings", text: "Hiring metrics with CSV export; roles, email templates, outbox and workspace settings." },
+        { name: "Home", brief: "Team tasks and news" },
+        { name: "Projects and responsibilities", brief: "Goals, owners, deadlines" },
+        { name: "People and time off", brief: "Directory and time-off calendar" },
+        { name: "Jobs and pipeline", brief: "Candidates by hiring stage" },
+        { name: "Interviews and scorecards", brief: "Scheduling and scorecards" },
+        { name: "AI screening", brief: "Resumes checked against requirements" },
+        { name: "Automations", brief: "Rules on hiring events" },
+        { name: "Reports and settings", brief: "Hiring metrics and CSV export" },
       ],
       strengths: [
         "Intranet and recruiting share one people directory and one navigation.",
@@ -295,14 +252,6 @@ export const talentco: Project = {
         "Hiring decisions rest on job requirements and structured feedback.",
         "Leadership sees which stage slows hiring down.",
       ],
-      usageTitle: "How to explore the demo",
-      usage: [
-        "Open the demo — you're signed in automatically as the sample administrator.",
-        "Switch roles in the top bar to see how permissions change.",
-        "In Pipeline, move a candidate to the next stage.",
-        "Open AI Screening and run the sample resumes: no API key needed.",
-        "The Reset Demo button restores the original data.",
-      ],
       limits: [
         "The data is fictional and stored only in your browser.",
         "Role restrictions in the demo are simulated and don't protect data.",
@@ -314,186 +263,4 @@ export const talentco: Project = {
         "TalentCo Workspace is a team portal and hiring system: projects, time off, candidate pipeline, interviews, AI resume screening, automations and reports. Interactive demo.",
     },
   },
-  demo: [
-    {
-      slug: "team",
-      shot: s.home,
-      text: {
-        ru: {
-          title: "Рабочее пространство команды",
-          summary: "Главная, проекты, зоны ответственности и лента работы.",
-          points: [
-            "Главная собирает личные задачи, просрочки и активные проекты.",
-            "Доступность коллег и ближайшие события видны сразу.",
-            "У проектов и зон ответственности есть владельцы, сроки и приоритеты.",
-            "Обсуждения, ресурсы и архив — в одном меню.",
-          ],
-        },
-        ro: {
-          title: "Spațiul de lucru al echipei",
-          summary: "Pagina principală, proiecte, zone de responsabilitate și fluxul de lucru.",
-          points: [
-            "Pagina principală adună sarcinile personale, restanțele și proiectele active.",
-            "Disponibilitatea colegilor și evenimentele apropiate se văd imediat.",
-            "Proiectele și responsabilitățile au responsabili, termene și priorități.",
-            "Discuțiile, resursele și arhiva sunt într-un singur meniu.",
-          ],
-        },
-        en: {
-          title: "Team workspace",
-          summary: "Home, projects, responsibilities and the work feed.",
-          points: [
-            "Home gathers personal tasks, overdue items and active projects.",
-            "Colleagues' availability and upcoming events are visible at once.",
-            "Projects and responsibilities have owners, deadlines and priorities.",
-            "Discussions, resources and the archive live in one menu.",
-          ],
-        },
-      },
-    },
-    {
-      slug: "people",
-      shot: s.timeOff,
-      text: {
-        ru: {
-          title: "Люди и отпуска",
-          summary: "Справочник сотрудников и календарь отсутствий команды.",
-          points: [
-            "Календарь отпусков по месяцам и в виде списка.",
-            "Фильтры по сотрудникам и отделам.",
-            "Справочник с отделами и контактами.",
-            "Лента активности показывает последние изменения.",
-          ],
-        },
-        ro: {
-          title: "Oameni și concedii",
-          summary: "Catalogul angajaților și calendarul absențelor echipei.",
-          points: [
-            "Calendarul concediilor pe luni și sub formă de listă.",
-            "Filtre pe angajați și departamente.",
-            "Catalog cu departamente și contacte.",
-            "Fluxul de activitate arată ultimele modificări.",
-          ],
-        },
-        en: {
-          title: "People and time off",
-          summary: "The employee directory and the team absence calendar.",
-          points: [
-            "Monthly and list views of time off.",
-            "Filters by employee and department.",
-            "A directory with departments and contacts.",
-            "The activity feed shows recent changes.",
-          ],
-        },
-      },
-    },
-    {
-      slug: "pipeline",
-      shot: s.pipeline,
-      text: {
-        ru: {
-          title: "Воронка кандидатов",
-          summary: "Кандидаты по этапам с покрытием требований и временем на этапе.",
-          points: [
-            "Доска и таблица: отклик, скрининг, техническое и командное интервью, оффер.",
-            "Фильтры по вакансии, источнику и исходу.",
-            "Сортировка по взвешенному покрытию обязательных требований.",
-            "Перевод на этап — с видимой передачей и записью в истории.",
-          ],
-        },
-        ro: {
-          title: "Pâlnia candidaților",
-          summary: "Candidații pe etape, cu acoperirea cerințelor și timpul pe etapă.",
-          points: [
-            "Tablă și tabel: aplicare, screening, interviu tehnic și de echipă, ofertă.",
-            "Filtre pe post, sursă și rezultat.",
-            "Sortare după acoperirea ponderată a cerințelor obligatorii.",
-            "Mutarea pe etapă se face cu predare vizibilă și înregistrare în istoric.",
-          ],
-        },
-        en: {
-          title: "Candidate pipeline",
-          summary: "Candidates by stage with requirement coverage and time in stage.",
-          points: [
-            "Board and table: applied, recruiter screen, technical and team interview, offer.",
-            "Filters by job, source and outcome.",
-            "Sorting by weighted coverage of required qualifications.",
-            "A stage move is a visible handoff recorded in history.",
-          ],
-        },
-      },
-    },
-    {
-      slug: "screening",
-      shot: s.screening,
-      text: {
-        ru: {
-          title: "ИИ-скрининг резюме",
-          summary: "Резюме превращаются в проверяемые профили кандидатов.",
-          points: [
-            "Шесть примеров PDF попадают в очередь без ключа API.",
-            "Извлечённый профиль можно исправить вручную.",
-            "Совпадение email связывает резюме с уже существующим кандидатом.",
-            "Скан без текста помечается для ручной обработки.",
-          ],
-        },
-        ro: {
-          title: "Screening AI al CV-urilor",
-          summary: "CV-urile devin profiluri verificabile ale candidaților.",
-          points: [
-            "Șase PDF-uri de exemplu intră în coadă fără cheie API.",
-            "Profilul extras poate fi corectat manual.",
-            "Coincidența e-mailului leagă CV-ul de un candidat existent.",
-            "O scanare fără text este marcată pentru procesare manuală.",
-          ],
-        },
-        en: {
-          title: "AI resume screening",
-          summary: "Resumes become verifiable candidate profiles.",
-          points: [
-            "Six sample PDFs enter the queue with no API key.",
-            "The extracted profile can be corrected by hand.",
-            "A matching email links the resume to an existing candidate.",
-            "A scan without text is flagged for manual handling.",
-          ],
-        },
-      },
-    },
-    {
-      slug: "automations",
-      shot: s.automations,
-      text: {
-        ru: {
-          title: "Автоматизации и отчёты",
-          summary: "Правила на событиях найма и метрики по фактическим переходам.",
-          points: [
-            "Правило: событие, условие и действия — задача, уведомление, тег, отложенное письмо.",
-            "У правил есть версии, пауза и журнал выполнения.",
-            "Неудачное действие можно безопасно повторить.",
-            "Отчёты по откликам и этапам выгружаются в CSV.",
-          ],
-        },
-        ro: {
-          title: "Automatizări și rapoarte",
-          summary: "Reguli pe evenimentele recrutării și indicatori din tranzițiile reale.",
-          points: [
-            "Regula: eveniment, condiție și acțiuni — sarcină, notificare, etichetă, e-mail amânat.",
-            "Regulile au versiuni, pauză și jurnal de execuție.",
-            "O acțiune eșuată poate fi reluată în siguranță.",
-            "Rapoartele pe aplicări și etape se exportă în CSV.",
-          ],
-        },
-        en: {
-          title: "Automations and reports",
-          summary: "Rules on hiring events and metrics from actual transitions.",
-          points: [
-            "A rule is an event, a condition and actions — task, notification, tag, held email.",
-            "Rules have versions, pause and an execution log.",
-            "A failed action can be retried safely.",
-            "Application and stage reports export to CSV.",
-          ],
-        },
-      },
-    },
-  ],
 };

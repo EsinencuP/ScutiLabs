@@ -10,11 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/services", priority: 0.8 },
     ...services.map((s) => ({ path: `/services/${s.slug}`, priority: 0.8 })),
     { path: "/portfolio", priority: 0.9 },
-    ...projects.flatMap((p) => [
-      { path: `/portfolio/${p.slug}`, priority: 0.9 },
-      ...(p.demo.length > 0 ? [{ path: `/portfolio/${p.slug}/demo`, priority: 0.6 }] : []),
-      ...p.demo.map((d) => ({ path: `/portfolio/${p.slug}/demo/${d.slug}`, priority: 0.5 })),
-    ]),
+    ...projects.map((p) => ({ path: `/portfolio/${p.slug}`, priority: 0.9 })),
     { path: "/brief", priority: 0.7 },
     { path: "/privacy", priority: 0.2 },
   ];

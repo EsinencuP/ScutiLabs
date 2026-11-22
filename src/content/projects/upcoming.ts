@@ -41,8 +41,6 @@ function upcoming(slug: string, services: ServiceSlug[], text: L10n<Brief>): Pro
     services,
     links: {},
     stack: [],
-    gallery: [],
-    demo: [],
     text: { ru: build("ru"), ro: build("ro"), en: build("en") },
   };
 }

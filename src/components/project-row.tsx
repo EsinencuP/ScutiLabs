@@ -3,7 +3,7 @@ import type { Project } from "@/content/projects";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { ProjectVisual } from "./project-visual";
-import { StatusBadge } from "./ui";
+import { ExternalLink, StatusBadge } from "./ui";
 
 export function ProjectRow({
   project,
@@ -49,11 +49,11 @@ export function ProjectRow({
             {t.portfolio.open}
             <span className="sr-only">: {p.name}</span>
           </Link>
-          {project.demo.length > 0 && (
-            <Link href={`${href}/demo`} className="btn btn-ghost">
-              {t.projectPage.demo}
+          {project.links.demo && (
+            <ExternalLink href={project.links.demo} hint={t.projectPage.external}>
+              {t.projectPage.links.demo}
               <span className="sr-only">: {p.name}</span>
-            </Link>
+            </ExternalLink>
           )}
         </div>
       </div>

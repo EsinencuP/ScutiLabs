@@ -1,14 +1,13 @@
 import type { L10n } from "@/i18n/config";
 import type { ServiceSlug } from "@/content/services";
+import type { IconName } from "@/components/project/module-icon";
 
 export type ProjectStatus = "live" | "demo" | "development";
-export type InteractiveKind = "stock-ledger";
-
-export type Shot = { src: string; width: number; height: number; alt: L10n };
 
 type Fact = { label: string; value: string };
 type Step = { actor: string; action: string; result: string };
-type Module = { name: string; text: string };
+/** A capability: a short name and a one-line caption. */
+type Module = { name: string; brief: string };
 
 /**
  * Card text in one language. Projects in development may carry only the core fields;
@@ -28,17 +27,14 @@ export type ProjectText = {
   modules?: Module[];
   strengths?: string[];
   benefits?: string[];
-  usageTitle?: string;
-  usage?: string[];
   limits?: string[];
   demoAccess?: string;
 };
 
-export type DemoPart = {
-  slug: string;
-  shot?: Shot;
-  interactive?: InteractiveKind;
-  text: L10n<{ title: string; summary: string; points: string[] }>;
+/** How a project page draws its process and its capabilities. */
+export type ProjectLayout = {
+  workflow: "relay" | "path" | "orbit";
+  capabilities: "icons" | "table" | "solar";
 };
 
 export type Project = {
@@ -48,17 +44,12 @@ export type Project = {
   /** Shown as a large row on the home page. */
   featured?: boolean;
   services: ServiceSlug[];
-  links: { demo?: string; guide?: string; repo?: string; related?: { href: string; label: L10n } };
+  links: { demo?: string; guide?: string; repo?: string };
   demoCredentials?: { login: string; password: string };
+  /** Runtime technologies the product's logic depends on (not demo hosting or tooling). */
   stack: string[];
-  gallery: Shot[];
+  layout?: ProjectLayout;
+  /** One icon per capability, in the same order as `modules`. */
+  moduleIcons?: IconName[];
   text: L10n<ProjectText>;
-  demo: DemoPart[];
 };
-
-export const shot = (dir: string, name: string, width: number, height: number, alt: L10n): Shot => ({
-  src: `/projects/${dir}/${name}.png`,
-  width,
-  height,
-  alt,
-});
