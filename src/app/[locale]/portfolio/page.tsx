@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PortfolioCatalog } from "@/components/portfolio-catalog";
 import { PortfolioNote } from "@/components/portfolio-note";
-import { ProjectCard } from "@/components/project-card";
+import { PortfolioLayout } from "@/components/portfolio-layout";
 import { Breadcrumbs, JsonLd, PageHero, Section } from "@/components/ui";
-import { projects, type ProjectStatus } from "@/content/projects";
-import { services } from "@/content/services";
+import { projects } from "@/content/projects";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { absoluteUrl, breadcrumbLd, pageMetadata } from "@/lib/seo";
@@ -23,9 +21,6 @@ export default async function PortfolioPage({ params }: Props) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = getDictionary(locale);
-
-  const usedServices = services.filter((s) => projects.some((p) => p.services.includes(s.slug)));
-  const usedStatuses = (["live", "demo", "development"] as ProjectStatus[]).filter((st) => projects.some((p) => p.status === st));
 
   return (
     <>
@@ -57,24 +52,7 @@ export default async function PortfolioPage({ params }: Props) {
       </PageHero>
       <Section className="!pt-12 md:!pt-16">
         <PortfolioNote locale={locale} note={t.portfolio.note} className="mb-12" />
-        <PortfolioCatalog
-          items={projects.map((p) => ({
-            slug: p.slug,
-            status: p.status,
-            services: p.services,
-            node: <ProjectCard project={p} locale={locale} t={t} />,
-          }))}
-          services={usedServices.map((s) => ({ value: s.slug, label: s.text[locale].name }))}
-          statuses={usedStatuses.map((st) => ({ value: st, label: t.status[st] }))}
-          labels={{
-            direction: t.portfolioPage.direction,
-            status: t.portfolioPage.status,
-            all: t.portfolioPage.all,
-            empty: t.portfolioPage.empty,
-            reset: t.portfolioPage.reset,
-            count: t.portfolioPage.count,
-          }}
-        />
+        <PortfolioLayout projects={projects} locale={locale} t={t} />
       </Section>
     </>
   );

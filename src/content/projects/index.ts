@@ -1,16 +1,15 @@
-import { aiPdfEditor } from "./ai-pdf-editor";
-import { crmPortfolio } from "./crm-portfolio";
+import { automationHub } from "./automation-hub";
+import { crm } from "./crm";
 import { evoErp } from "./evo-erp";
+import { revenueWorkspace } from "./revenue-workspace";
 import { talentco } from "./talentco";
 import type { Project } from "./types";
-import { upcomingProjects } from "./upcoming";
 
 export type { Project, ProjectLayout, ProjectStatus } from "./types";
 
-/** Catalogue order: open projects first, then those still in development. */
-export const projects: Project[] = [evoErp, crmPortfolio, talentco, aiPdfEditor, ...upcomingProjects];
+/** Catalogue order. */
+export const projects: Project[] = [crm, evoErp, revenueWorkspace, talentco, automationHub];
 
 export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);
 }
-

@@ -3,7 +3,6 @@ import type { Project } from "./types";
 export const evoErp: Project = {
   slug: "evo-erp",
   status: "demo",
-  featured: true,
   year: 2026,
   services: ["erp-operations", "crm-sales", "documents-approvals", "hr-team", "analytics-control"],
   layout: { workflow: "relay", capabilities: "solar" },

@@ -41,8 +41,8 @@ export type Project = {
   slug: string;
   status: ProjectStatus;
   year: number;
-  /** Shown as a large row on the home page. */
-  featured?: boolean;
+  /** The main project: shown in the centre of the portfolio, flanked by the others. */
+  flagship?: boolean;
   services: ServiceSlug[];
   links: { demo?: string; guide?: string; repo?: string };
   demoCredentials?: { login: string; password: string };

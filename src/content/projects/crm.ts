@@ -1,9 +1,9 @@
 import type { Project } from "./types";
 
-export const crmPortfolio: Project = {
-  slug: "crm-portfolio",
+export const crm: Project = {
+  slug: "crm",
   status: "demo",
-  featured: true,
+  flagship: true,
   year: 2026,
   services: ["crm-sales", "documents-approvals", "analytics-control"],
   layout: { workflow: "path", capabilities: "icons" },
@@ -17,7 +17,7 @@ export const crmPortfolio: Project = {
   stack: ["Next.js", "React", "TypeScript", "PostgreSQL", "Prisma", "Auth.js", "Zod", "BullMQ", "Redis", "TanStack Query", "React Flow", "FullCalendar", "Recharts", "Gmail API", "Microsoft Graph", "Twilio", "WhatsApp Cloud API", "Telegram Bot API", "AI SDK", "OpenAI API"],
   text: {
     ru: {
-      name: "CRM Portfolio",
+      name: "CRM",
       kind: "CRM с автоматизациями",
       stages: ["Заявка с сайта", "Автоматизация", "Переписка", "Воронка", "Документы", "Аналитика"],
       tagline:
@@ -25,7 +25,7 @@ export const crmPortfolio: Project = {
       summary:
         "CRM для отдела продаж: воронка с прогнозом, календарь активностей, почта и звонки из карточки, единый инбокс мессенджеров, формы захвата лидов, визуальный конструктор автоматизаций, предложения, счета и договоры. Публичное демо с тремя ролями.",
       purpose: [
-        "CRM Portfolio собирает в одном рабочем пространстве всё, что менеджер делает с клиентом: контакт и компания, сделка в воронке, письма, звонки, переписка в WhatsApp и Telegram, задачи и встречи. История клиента видна целиком, а доступ определяется ролью и правами на конкретную запись.",
+        "CRM собирает в одном рабочем пространстве всё, что менеджер делает с клиентом: контакт и компания, сделка в воронке, письма, звонки, переписка в WhatsApp и Telegram, задачи и встречи. История клиента видна целиком, а доступ определяется ролью и правами на конкретную запись.",
         "Рутинные шаги выполняют автоматизации: заявка с формы на сайте создаёт контакт и задачу, смена этапа сделки отправляет письмо или уведомление, внешняя система получает событие через вебхук. Предложения, счета и договоры формируются в CRM с автоматической нумерацией и PDF.",
       ],
       facts: [
@@ -100,10 +100,10 @@ export const crmPortfolio: Project = {
       ],
       demoAccess: "Публичное демо с учебными данными. Не вносите туда реальные сведения о клиентах.",
       metaDescription:
-        "CRM Portfolio — CRM с воронкой, почтой, звонками, WhatsApp и Telegram, формами лидов, конструктором автоматизаций, предложениями, счетами и договорами. Публичное демо.",
+        "CRM — система продаж с воронкой, почтой, звонками, WhatsApp и Telegram, формами лидов, конструктором автоматизаций, предложениями, счетами и договорами. Публичное демо.",
     },
     ro: {
-      name: "CRM Portfolio",
+      name: "CRM",
       kind: "CRM cu automatizări",
       stages: ["Cerere de pe site", "Automatizare", "Comunicare", "Pâlnie", "Documente", "Analiză"],
       tagline:
@@ -111,7 +111,7 @@ export const crmPortfolio: Project = {
       summary:
         "CRM pentru echipa de vânzări: pâlnie cu prognoză, calendarul activităților, e-mail și apeluri din fișă, inbox unificat pentru mesagerii, formulare de captare a lead-urilor, constructor vizual de automatizări, oferte, facturi și contracte. Demo public cu trei roluri.",
       purpose: [
-        "CRM Portfolio adună într-un singur spațiu de lucru tot ce face managerul cu clientul: contact și companie, tranzacție în pâlnie, e-mailuri, apeluri, conversații în WhatsApp și Telegram, sarcini și întâlniri. Istoricul clientului este vizibil complet, iar accesul depinde de rol și de drepturile pe fiecare înregistrare.",
+        "CRM adună într-un singur spațiu de lucru tot ce face managerul cu clientul: contact și companie, tranzacție în pâlnie, e-mailuri, apeluri, conversații în WhatsApp și Telegram, sarcini și întâlniri. Istoricul clientului este vizibil complet, iar accesul depinde de rol și de drepturile pe fiecare înregistrare.",
         "Pașii de rutină îi execută automatizările: cererea din formularul de pe site creează contactul și sarcina, schimbarea etapei trimite un e-mail sau o notificare, un sistem extern primește evenimentul prin webhook. Ofertele, facturile și contractele se generează în CRM cu numerotare automată și PDF.",
       ],
       facts: [
@@ -186,10 +186,10 @@ export const crmPortfolio: Project = {
       ],
       demoAccess: "Demo public cu date de exemplu. Nu introduceți informații reale despre clienți.",
       metaDescription:
-        "CRM Portfolio — CRM cu pâlnie, e-mail, apeluri, WhatsApp și Telegram, formulare de lead-uri, constructor de automatizări, oferte, facturi și contracte. Demo public.",
+        "CRM — sistem de vânzări cu pâlnie, e-mail, apeluri, WhatsApp și Telegram, formulare de lead-uri, constructor de automatizări, oferte, facturi și contracte. Demo public.",
     },
     en: {
-      name: "CRM Portfolio",
+      name: "CRM",
       kind: "CRM with automations",
       stages: ["Website lead", "Automation", "Conversations", "Pipeline", "Documents", "Analytics"],
       tagline:
@@ -197,7 +197,7 @@ export const crmPortfolio: Project = {
       summary:
         "A CRM for sales teams: forecasted pipeline, activity calendar, email and calls from the contact profile, a unified messaging inbox, lead capture forms, a visual automation builder, quotations, invoices and contracts. Public demo with three roles.",
       purpose: [
-        "CRM Portfolio gathers everything a manager does with a customer in one workspace: contact and company, the deal in the pipeline, emails, calls, WhatsApp and Telegram conversations, tasks and meetings. The full customer history is visible, and access depends on role and per-record permissions.",
+        "CRM gathers everything a manager does with a customer in one workspace: contact and company, the deal in the pipeline, emails, calls, WhatsApp and Telegram conversations, tasks and meetings. The full customer history is visible, and access depends on role and per-record permissions.",
         "Automations take care of routine steps: a website form submission creates a contact and a task, a deal stage change sends an email or a notification, an external system receives the event via webhook. Quotations, invoices and contracts are produced in the CRM with automatic numbering and PDFs.",
       ],
       facts: [
@@ -272,7 +272,7 @@ export const crmPortfolio: Project = {
       ],
       demoAccess: "A public demo with sample data. Don't enter real customer information.",
       metaDescription:
-        "CRM Portfolio is a CRM with a pipeline, email, calls, WhatsApp and Telegram, lead forms, an automation builder, quotations, invoices and contracts. Public demo.",
+        "CRM is a sales system with a pipeline, email, calls, WhatsApp and Telegram, lead forms, an automation builder, quotations, invoices and contracts. Public demo.",
     },
   },
 };

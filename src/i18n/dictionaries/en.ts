@@ -53,6 +53,7 @@ const en: Dictionary = {
     open: "Open project",
     catalog: "Full project catalogue",
     more: "More in the portfolio",
+    flagship: "Flagship project",
   },
   start: {
     title: "Getting started",

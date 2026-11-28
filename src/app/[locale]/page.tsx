@@ -5,9 +5,9 @@ import { AsciiStar } from "@/components/ascii-star";
 import { HashScroll } from "@/components/hash-scroll";
 import { PlusIcon } from "@/components/icons";
 import { PortfolioNote } from "@/components/portfolio-note";
-import { ProjectRow } from "@/components/project-row";
+import { PortfolioLayout } from "@/components/portfolio-layout";
 import { StarSystem } from "@/components/star-system";
-import { JsonLd, Section, statusDot } from "@/components/ui";
+import { JsonLd, Section } from "@/components/ui";
 import { projects } from "@/content/projects";
 import { services } from "@/content/services";
 import { isLocale, type Locale } from "@/i18n/config";
@@ -31,9 +31,6 @@ export default async function HomePage({ params }: Props) {
   if (!isLocale(raw)) notFound();
   const locale: Locale = raw;
   const t = getDictionary(locale);
-
-  const featured = projects.filter((p) => p.featured);
-  const more = projects.filter((p) => !p.featured);
 
   const systemServices = services.map((s) => ({
     slug: s.slug,
@@ -141,35 +138,7 @@ export default async function HomePage({ params }: Props) {
           </Link>
         </div>
         <PortfolioNote locale={locale} note={t.portfolio.note} className="mb-20 md:mb-28" />
-        <div className="space-y-24 md:space-y-32">
-          {featured.map((p, i) => (
-            <ProjectRow key={p.slug} project={p} locale={locale} t={t} flip={i % 2 === 1} />
-          ))}
-        </div>
-        {more.length > 0 && (
-          <div className="mt-24 grid gap-8 border-t border-ink pt-8 md:mt-32 lg:grid-cols-12">
-            <h3 className="text-2xl font-medium lg:col-span-4">{t.portfolio.more}</h3>
-            <ul className="lg:col-span-8">
-              {more.map((p) => (
-                <li key={p.slug} className="border-b border-line">
-                  <Link
-                    href={`/${locale}/portfolio/${p.slug}`}
-                    className="group grid gap-x-6 gap-y-1 py-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-baseline"
-                  >
-                    <span>
-                      <span className="text-lg font-medium group-hover:underline">{p.text[locale].name}</span>
-                      <span className="ml-3 text-ink-2">{p.text[locale].kind}</span>
-                    </span>
-                    <span className="flex items-center gap-2 text-sm text-ink-2">
-                      <span aria-hidden="true" className={`size-2 rounded-full ${statusDot[p.status]}`} />
-                      {t.status[p.status]}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <PortfolioLayout projects={projects} locale={locale} t={t} />
       </Section>
 
       {/* How to start */}

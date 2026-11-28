@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [{ source: "/favicon.ico", destination: "/icon.svg" }];
   },
+  // The CRM project page moved when the project was renamed from "CRM Portfolio" to "CRM".
+  async redirects() {
+    return [{ source: "/:locale(ru|ro|en)/portfolio/crm-portfolio", destination: "/:locale/portfolio/crm", permanent: true }];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

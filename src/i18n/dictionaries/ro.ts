@@ -53,6 +53,7 @@ const ro: Dictionary = {
     open: "Deschide proiectul",
     catalog: "Catalogul complet de proiecte",
     more: "Mai multe în portofoliu",
+    flagship: "Proiectul principal",
   },
   start: {
     title: "Cum începem",
