@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BriefPlanner } from "@/components/brief-planner";
 import { Breadcrumbs, PageHero, Section } from "@/components/ui";
-import { services } from "@/content/services";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { pageMetadata } from "@/lib/seo";
@@ -35,7 +34,6 @@ export default async function BriefPage({ params }: Props) {
           roi={t.roi}
           locale={locale}
           contacts={contacts}
-          services={services.map((s) => ({ slug: s.slug, name: s.text[locale].name }))}
         />
       </Section>
     </>

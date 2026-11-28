@@ -1,8 +1,8 @@
 "use client";
 
-import { Clock } from "lucide-react";
-import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { roiConfig, type ScheduleId } from "@/content/roi";
+import { Minus, Plus } from "lucide-react";
+import { useEffect, useId, useRef, useState } from "react";
+import { roiConfig } from "@/content/roi";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import type { RoiInput, RoiResult } from "@/lib/roi";
 
@@ -30,51 +30,6 @@ export function paybackText(t: Dictionary["roi"], locale: string, months: number
   return t.months.replace("{n}", number(locale, months, 1));
 }
 
-function Slider({
-  label,
-  hint,
-  value,
-  min,
-  max,
-  step,
-  display,
-  onChange,
-}: {
-  label: string;
-  hint?: string;
-  value: number;
-  min: number;
-  max: number;
-  step: number;
-  display: string;
-  onChange: (v: number) => void;
-}) {
-  const id = useId();
-  return (
-    <div>
-      <div className="flex items-baseline justify-between gap-4">
-        <label htmlFor={id} className="text-[0.9375rem] font-medium leading-snug">
-          {label}
-        </label>
-        <output htmlFor={id} className="shrink-0 font-medium tabular-nums">
-          {display}
-        </output>
-      </div>
-      {hint && <p className="mt-0.5 text-sm leading-snug text-ink-3">{hint}</p>}
-      <input
-        id={id}
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
-        className="mt-3 h-2 w-full cursor-pointer accent-black"
-      />
-    </div>
-  );
-}
-
 function niceMax(value: number) {
   if (value <= 0) return 1;
   const exp = 10 ** Math.floor(Math.log10(value));
@@ -97,7 +52,7 @@ function RoiChart({ result, t, locale }: { result: RoiResult; t: Dictionary["roi
   }, []);
   const narrow = W < 520;
   const H = narrow ? 230 : 270;
-  const n = roiConfig.horizonMonths;
+  const n = result.horizon;
   const last = result.series[n];
   const yMax = niceMax(Math.max(last.manual, last.automated));
   const yTicks = (narrow ? [0, 0.5, 1] : [0, 0.25, 0.5, 0.75, 1]).map((k) => ({ v: yMax * k, label: money(locale, yMax * k, true) }));
@@ -134,7 +89,7 @@ function RoiChart({ result, t, locale }: { result: RoiResult; t: Dictionary["roi
   return (
     <figure className="mt-8">
       <figcaption className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
-        <span className="font-medium">{t.chart}</span>
+        <span className="font-medium">{t.chart.replace("{n}", String(n))}</span>
         <span className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-ink-2">
           <span className="flex items-center gap-2">
             <span aria-hidden="true" className="h-0.5 w-5 rounded-full" style={{ background: MANUAL }} />
@@ -156,7 +111,7 @@ function RoiChart({ result, t, locale }: { result: RoiResult; t: Dictionary["roi
               </text>
             </g>
           ))}
-          {(narrow ? [0, 12, 24] : [0, 6, 12, 18, 24]).map((m) => {
+          {(n === 36 ? (narrow ? [0, 18, 36] : [0, 12, 24, 36]) : narrow ? [0, 12, 24] : [0, 6, 12, 18, 24]).map((m) => {
             // on phones the unit rides on the last tick instead of a separate label
             const tail = narrow && m === n;
             return (
@@ -243,7 +198,7 @@ function RoiChart({ result, t, locale }: { result: RoiResult; t: Dictionary["roi
         )}
       </div>
       <table className="sr-only">
-        <caption>{t.chart}</caption>
+        <caption>{t.chart.replace("{n}", String(n))}</caption>
         <thead>
           <tr>
             <th scope="col">{t.monthAxis}</th>
@@ -267,6 +222,68 @@ function RoiChart({ result, t, locale }: { result: RoiResult; t: Dictionary["roi
   );
 }
 
+/** Whole-number field with − and + buttons; typing is allowed, the value is clamped on blur. */
+function Stepper({
+  label,
+  value,
+  min,
+  max,
+  step = 1,
+  suffix,
+  less,
+  more,
+  onChange,
+}: {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step?: number;
+  suffix?: string;
+  less: string;
+  more: string;
+  onChange: (v: number) => void;
+}) {
+  const id = useId();
+  const [text, setText] = useState(String(value));
+  useEffect(() => setText(String(value)), [value]);
+  const commit = (v: number) => onChange(Math.min(max, Math.max(min, Math.round(v / step) * step)));
+  const btn =
+    "flex size-11 shrink-0 items-center justify-center rounded-full ring-1 ring-line transition-colors hover:ring-ink-3 disabled:cursor-not-allowed disabled:opacity-40";
+  return (
+    <div>
+      <label htmlFor={id} className="text-[0.9375rem] font-medium leading-snug">
+        {label}
+      </label>
+      <div className="mt-3 flex items-center gap-2">
+        <button type="button" className={btn} aria-label={less} disabled={value <= min} onClick={() => commit(value - step)}>
+          <Minus className="size-4" strokeWidth={1.8} aria-hidden="true" />
+        </button>
+        <div className="relative min-w-0 flex-1">
+          <input
+            id={id}
+            inputMode="numeric"
+            value={text}
+            onChange={(e) => {
+              const digits = e.target.value.replace(/\D/g, "").slice(0, 6);
+              setText(digits);
+              const v = Number(digits);
+              if (digits && v >= min && v <= max) onChange(v);
+            }}
+            onBlur={() => commit(Number(text) || min)}
+            className={`field h-11 text-center text-lg font-medium tabular-nums ${suffix ? "pr-9" : ""}`}
+          />
+          {suffix && <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-ink-3">{suffix}</span>}
+        </div>
+        <button type="button" className={btn} aria-label={more} disabled={value >= max} onClick={() => commit(value + step)}>
+          <Plus className="size-4" strokeWidth={1.8} aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** Compact savings module: three simple answers, the saving and payback, and the cost curve. */
 export function RoiCalculator({
   t,
   locale,
@@ -285,162 +302,97 @@ export function RoiCalculator({
   onInclude: (next: boolean) => void;
 }) {
   const set = <K extends keyof RoiInput>(key: K, v: RoiInput[K]) => onChange({ ...value, [key]: v });
-  const schedule = useMemo(() => roiConfig.schedules.find((s) => s.id === value.schedule) ?? roiConfig.schedules[0], [value.schedule]);
   const c = roiConfig;
-  const legend = "text-sm text-ink-3";
+  const symbol =
+    new Intl.NumberFormat(intlLocale(locale), { style: "currency", currency: c.currency }).formatToParts(0).find((p) => p.type === "currency")?.value ?? "";
 
   return (
-    <section aria-labelledby="roi-title" className="rounded-[1.75rem] bg-white p-6 md:p-10">
-      <h2 id="roi-title" className="display h-block">
+    <section aria-labelledby="roi-title" className="rounded-[1.75rem] bg-white p-6 md:p-8">
+      <p className="text-sm text-ink-3">{t.extra}</p>
+      <h2 id="roi-title" className="display h-block mt-1">
         {t.title}
       </h2>
-      <p className="mt-3 max-w-[60ch] leading-relaxed text-ink-2">{t.lead}</p>
+      <p className="mt-2 leading-relaxed text-ink-2">{t.lead}</p>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-12 lg:gap-12">
-        <div className="space-y-10 lg:col-span-5">
-          <fieldset className="space-y-6">
-            <legend className={legend}>{t.now}</legend>
-            <Slider
-              label={t.people}
-              value={value.people}
-              min={c.people.min}
-              max={c.people.max}
-              step={c.people.step}
-              display={number(locale, value.people)}
-              onChange={(v) => set("people", v)}
-            />
-            <div>
-              <p className="text-[0.9375rem] font-medium">{t.schedule}</p>
-              <div role="radiogroup" aria-label={t.schedule} className="mt-3 grid gap-2 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-                {c.schedules.map((s) => {
-                  const on = value.schedule === s.id;
-                  return (
-                    <label
-                      key={s.id}
-                      className={`flex min-h-11 cursor-pointer items-center justify-center rounded-xl px-3 text-center text-sm leading-tight ring-1 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
-                        on ? "bg-ink text-white ring-ink" : "ring-line hover:ring-ink-3"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="roi-schedule"
-                        className="sr-only"
-                        checked={on}
-                        onChange={() =>
-                          onChange({ ...value, schedule: s.id as ScheduleId, hoursPerDay: Math.min(value.hoursPerDay, s.hoursPerDay) })
-                        }
-                      />
-                      {t.schedules[s.id as keyof typeof t.schedules]}
-                    </label>
-                  );
-                })}
-              </div>
-            </div>
-            <Slider
-              label={t.hours}
-              value={value.hoursPerDay}
-              min={c.hoursPerDay.min}
-              max={schedule.hoursPerDay}
-              step={c.hoursPerDay.step}
-              display={`${number(locale, value.hoursPerDay, 1)} ${t.unitHours}`}
-              onChange={(v) => set("hoursPerDay", v)}
-            />
-            <Slider
-              label={t.rate}
-              hint={t.rateHint}
-              value={value.rate}
-              min={c.rate.min}
-              max={c.rate.max}
-              step={c.rate.step}
-              display={money(locale, value.rate)}
-              onChange={(v) => set("rate", v)}
-            />
-            <Slider
-              label={t.share}
-              hint={t.shareHint}
-              value={value.share}
-              min={c.share.min}
-              max={c.share.max}
-              step={c.share.step}
-              display={`${value.share}%`}
-              onChange={(v) => set("share", v)}
-            />
-          </fieldset>
-
-          <fieldset className="space-y-6 border-t border-line pt-8">
-            <legend className="sr-only">{t.auto}</legend>
-            <p aria-hidden="true" className={legend}>
-              {t.auto}
-            </p>
-            <Slider
-              label={t.build}
-              value={value.build}
-              min={c.build.min}
-              max={c.build.max}
-              step={c.build.step}
-              display={money(locale, value.build)}
-              onChange={(v) => set("build", v)}
-            />
-            <Slider
-              label={t.hosting}
-              value={value.hosting}
-              min={c.hosting.min}
-              max={c.hosting.max}
-              step={c.hosting.step}
-              display={money(locale, value.hosting)}
-              onChange={(v) => set("hosting", v)}
-            />
-            <p className="text-sm leading-snug text-ink-3">{t.autoNote}</p>
-          </fieldset>
-        </div>
-
-        <div className="lg:col-span-7">
-          <div className="rounded-[1.5rem] bg-panel p-6 md:p-8" aria-live="polite">
-            <p className="text-sm text-ink-2">{t.manualMonthly}</p>
-            <p className="display mt-1 flex items-center gap-3 text-[clamp(2.4rem,5vw,3.6rem)] leading-none tabular-nums">
-              <span aria-hidden="true" className="size-3 shrink-0 rounded-full" style={{ background: MANUAL }} />
-              {money(locale, result.manualMonthly)}
-            </p>
-            <p className="mt-3 text-ink-2">
-              {t.perYear.replace("{v}", money(locale, result.manualYearly))}
-              <span className="mx-2 text-ink-4">/</span>
-              {t.hoursMonth.replace("{n}", number(locale, result.hoursMonth))}
-            </p>
-
-            <dl className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              <div className="rounded-2xl bg-white p-4">
-                <dt className="text-sm text-ink-2">{t.saving}</dt>
-                <dd className="mt-1 text-xl font-medium tabular-nums sm:text-2xl">{money(locale, result.savingMonthly)}</dd>
-              </div>
-              <div className="rounded-2xl bg-white p-4">
-                <dt className="text-sm text-ink-2">{t.payback}</dt>
-                <dd className="mt-1 text-xl font-medium tabular-nums sm:text-2xl">{paybackText(t, locale, result.paybackMonths)}</dd>
-              </div>
-              <div className="col-span-2 rounded-2xl bg-white p-4 sm:col-span-1">
-                <dt className="text-sm text-ink-2">{t.net36}</dt>
-                <dd className="mt-1 text-xl font-medium tabular-nums sm:text-2xl">{money(locale, result.net36)}</dd>
-              </div>
-            </dl>
-            <p className="mt-4 text-[0.9375rem] text-ink-2">
-              {result.savingMonthly > 0
-                ? t.freed.replace("{n}", number(locale, result.hoursFreed))
-                : t.noPaybackNote}
-            </p>
-
-            <RoiChart result={result} t={t} locale={locale} />
-
-            <p className="mt-6 flex gap-3 rounded-2xl bg-white p-4 text-[0.9375rem] leading-snug text-ink-2">
-              <Clock aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-ink" strokeWidth={1.6} />
-              {t.idle.replace("{n}", number(locale, result.idleHoursWeek)).replace("{p}", number(locale, result.idleShare * 100))}
-            </p>
+      <div className="mt-7 space-y-6">
+        <Stepper
+          label={t.people}
+          value={value.people}
+          min={c.people.min}
+          max={c.people.max}
+          less={t.less}
+          more={t.more}
+          onChange={(v) => set("people", v)}
+        />
+        <fieldset>
+          <legend className="text-[0.9375rem] font-medium leading-snug">{t.hours}</legend>
+          <div className="mt-3 grid grid-cols-4 gap-2">
+            {c.hoursPerDay.options.map((h) => {
+              const on = value.hoursPerDay === h;
+              return (
+                <label
+                  key={h}
+                  className={`flex min-h-11 cursor-pointer items-center justify-center rounded-xl px-2 text-center text-sm leading-tight ring-1 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-ink ${
+                    on ? "bg-ink text-white ring-ink" : "ring-line hover:ring-ink-3"
+                  }`}
+                >
+                  <input type="radio" name="roi-hours" className="sr-only" checked={on} onChange={() => set("hoursPerDay", h)} />
+                  {h === 8 ? t.fullDay : `${h} ${t.unitHours}`}
+                </label>
+              );
+            })}
           </div>
-
-          <label className="mt-5 flex cursor-pointer items-center gap-3 text-[0.9375rem]">
-            <input type="checkbox" checked={include} onChange={(e) => onInclude(e.target.checked)} className="size-5 accent-black" />
-            {t.include}
-          </label>
-        </div>
+        </fieldset>
+        <Stepper
+          label={t.salary}
+          value={value.salary}
+          min={c.salary.min}
+          max={c.salary.max}
+          step={c.salary.step}
+          suffix={symbol}
+          less={t.less}
+          more={t.more}
+          onChange={(v) => set("salary", v)}
+        />
       </div>
+
+      <div className="mt-8 rounded-[1.5rem] bg-panel p-5 md:p-6" aria-live="polite">
+        <p className="text-sm text-ink-2">{t.saving}</p>
+        <p className="display mt-1 flex items-center gap-3 text-[clamp(2.2rem,4vw,3rem)] leading-none tabular-nums">
+          <span aria-hidden="true" className="size-3 shrink-0 rounded-full" style={{ background: AUTOMATED }} />
+          {money(locale, result.savingMonthly)}
+        </p>
+        <p className="mt-3 text-[0.9375rem] text-ink-2">
+          {t.now.replace("{v}", money(locale, result.manualMonthly))}
+          <span className="mx-2 text-ink-4">/</span>
+          {t.freed.replace("{n}", number(locale, result.hoursFreed))}
+        </p>
+
+        <dl className="mt-5 grid grid-cols-2 gap-3">
+          <div className="rounded-2xl bg-white p-4">
+            <dt className="text-sm text-ink-2">{t.payback}</dt>
+            <dd className="mt-1 text-xl font-medium tabular-nums">{paybackText(t, locale, result.paybackMonths)}</dd>
+          </div>
+          <div className="rounded-2xl bg-white p-4">
+            <dt className="text-sm text-ink-2">{t.net36}</dt>
+            <dd className="mt-1 text-xl font-medium tabular-nums">{money(locale, result.net36)}</dd>
+          </div>
+        </dl>
+
+        <RoiChart result={result} t={t} locale={locale} />
+
+        <p className="mt-5 rounded-2xl bg-white p-4 text-[0.9375rem] leading-snug">
+          {t.price.replace("{build}", money(locale, result.build)).replace("{support}", money(locale, result.support))}
+        </p>
+        <p className="mt-3 text-sm leading-snug text-ink-3">
+          {t.assumptions.replace("{d}", String(c.workdaysPerMonth)).replace("{p}", String(Math.round(c.share * 100)))}
+        </p>
+      </div>
+
+      <label className="mt-5 flex cursor-pointer items-center gap-3 text-[0.9375rem]">
+        <input type="checkbox" checked={include} onChange={(e) => onInclude(e.target.checked)} className="size-5 accent-black" />
+        {t.include}
+      </label>
     </section>
   );
 }

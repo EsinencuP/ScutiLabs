@@ -1,22 +1,29 @@
 /**
  * Savings calculator settings for the brief page.
- * `build` and `hosting` defaults are an example for comparison, not a price list:
- * set them to the ranges you actually quote.
+ *
+ * The visitor answers three questions; the implementation price is not an input. It is derived
+ * from the saving so that it pays back in about `targetPaybackMonths`, within `minBuild`–`maxBuild`.
+ * These numbers are shown to visitors as a starting price ("from"), so set them to what you are
+ * actually willing to quote.
  */
 export const roiConfig = {
   currency: "EUR",
-  horizonMonths: 24,
-  people: { min: 1, max: 50, step: 1, value: 3 },
-  hoursPerDay: { min: 0.5, step: 0.5, value: 2 },
-  rate: { min: 2, max: 60, step: 1, value: 8 },
-  share: { min: 20, max: 95, step: 5, value: 70 },
-  build: { min: 1000, max: 60000, step: 500, value: 6000 },
-  hosting: { min: 0, max: 1000, step: 10, value: 60 },
-  schedules: [
-    { id: "5x8", daysPerMonth: 22, hoursPerDay: 8, hoursPerWeek: 40 },
-    { id: "6x8", daysPerMonth: 26, hoursPerDay: 8, hoursPerWeek: 48 },
-    { id: "2x2", daysPerMonth: 15, hoursPerDay: 12, hoursPerWeek: 42 },
-  ],
+  workdaysPerMonth: 21,
+  workHoursPerMonth: 168,
+  people: { min: 1, max: 50, value: 3 },
+  hoursPerDay: { options: [1, 2, 4, 8], value: 2 },
+  salary: { min: 500, max: 8000, step: 100, value: 1200 },
+  /** Share of the routine work automation takes over. */
+  share: 0.75,
+  pricing: {
+    targetPaybackMonths: 6,
+    minBuild: 1000,
+    maxBuild: 30000,
+    buildStep: 500,
+    /** Monthly server and support as a share of the gross saving, rounded to `supportStep`. */
+    supportShare: 0.1,
+    minSupport: 10,
+    maxSupport: 300,
+    supportStep: 5,
+  },
 } as const;
-
-export type ScheduleId = (typeof roiConfig.schedules)[number]["id"];
